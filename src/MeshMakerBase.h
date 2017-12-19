@@ -17,6 +17,6 @@ protected:
 	bool setupConcatenatedShader(ofShader & shdr, string shdrSrcFile, string fracFuncFile);
 
 	ofShader getPointsCS, getCasesCS, buildNextLayerCS, buildFinalLayerCS;
-	int layers, numVerts, numPolys;
+	int numVerts, numPolys;
 	ControlPanel &control;
 };

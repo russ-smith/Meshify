@@ -12,11 +12,11 @@ void ofApp::setup(){
 	lightColor = ofVec3f(1);
 	renderShader.load("DrawingShaders/lightsphong");
 	cam.setDistance(10);
+	cam.setNearClip(1);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
 }
 
 //--------------------------------------------------------------
@@ -24,7 +24,9 @@ void ofApp::draw(){
 	ofBackgroundGradient(ofColor::lightSkyBlue, ofColor::black);
 	ofEnableDepthTest();
 	glEnable(GL_CULL_FACE);
-	cam.begin();
+	cam.begin(); 
+	float s = control.zoom();
+	ofScale(s, s, s);
 	lightPos.set(150 * sin(ofGetElapsedTimef()), 150 * cos(ofGetElapsedTimef()), 200);
 	renderShader.begin();
 	renderShader.setUniformMatrix4f("normalMatrix", ofGetCurrentNormalMatrix());
@@ -52,8 +54,8 @@ void ofApp::keyReleased(int key){
 }
 
 void ofApp::changeAlgorithm() {
-	if (control.isMC)
-		maker = make_unique<MeshMakerMarchingCubes>(control);
+	
+	maker = make_unique<MeshMakerMarchingCubes>(control);
 
 	maker->makeMesh();
 }

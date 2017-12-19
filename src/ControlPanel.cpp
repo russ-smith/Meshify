@@ -3,7 +3,8 @@
 
 ControlPanel::ControlPanel() {
 	DEFAULT_DIR = ofToDataPath("", true);
-	res = 64;
+	m_res = 64;
+	m_layers = 5;
 	GUI.setup("Controls");
 	fractalParams.setName("Fractal Parameters");
 	positionParams.setName("Position Parameters");
@@ -28,7 +29,7 @@ ControlPanel::ControlPanel() {
 	fractalParams.add(paramG.set("G", 0, -1, 1));
 	fractalParams.add(paramH.set("H", 0, -1, 1));
 	positionParams.add(centre.set("Centre", ofVec3f(0), ofVec3f(-5), ofVec3f(5)));
-	positionParams.add(extent.set("Extent", 4, 0, 10));
+	positionParams.add(extent.set("Extent", 4, 0.1, 10));
 	resMatrix.setup("Resolution", 4);
 	resMatrix.setName("Grid Resolution");
 	resMatrix.add(new ofxMinimalToggle(res64.set("64", true)));
@@ -61,33 +62,46 @@ ControlPanel::ControlPanel() {
 	GUI.add(&polygons);
 	GUI.add(new ofxSlider<float>(fps.set("FPS", 0, 0, 30)));
 	functionFile = ofToDataPath("DistanceFunctions/sphere.glsl");
-	isMeshChanged = isDrawing = true;
 }
 
 //callback methods for parameter changes
 void ControlPanel::fParamsChanged(float & param) {
-	redrawCallback();
+	if (redrawCallback)
+		redrawCallback();
 }
 
 void ControlPanel::vParamsChanged(ofVec3f & param) {
-	redrawCallback();
+	if (redrawCallback)
+		redrawCallback();
 }
 
 void ControlPanel::iParamsChanged(int & param) {
-	redrawCallback();
+	if (redrawCallback)
+		redrawCallback();
 }
 
 void ControlPanel::resChanged(bool & param) {	
-	if (res64) res = 64; 
-	if (res128) res = 128;
-	if (res256) res = 256;
-	if (res512) res = 512;
-	redrawCallback();
+	if (res64) {
+		m_res = 64; m_layers = 5;
+	}
+	if (res128) {
+		m_res = 128; m_layers = 6;
+	}
+	if (res256) { 
+		m_res = 256; m_layers = 7; 
+	}
+	if (res512) { 
+		m_res = 512; m_layers = 8; 
+	}
+	if (redrawCallback)
+		redrawCallback();
 }
 
 void ControlPanel::algoChanged(bool & param) {
-	algorithmCallback();
-	redrawCallback();
+	if(algorithmCallback)
+		algorithmCallback();
+	if (redrawCallback)
+		redrawCallback();
 }
 
 //update vertex and polygon count display
@@ -108,10 +122,28 @@ void ControlPanel::registerAlgorithmCallback(function<void()> f) {
 	algorithmCallback = f;
 }
 
+int ControlPanel::res() {
+	return m_res;
+}
+
+int ControlPanel::layers() {
+	return m_layers;
+}
+
+float ControlPanel::stride() {
+	return extent / float(m_res);
+}
+
+float ControlPanel::zoom() {
+	return 10 / extent;
+}
+
 //load fractal function file from disk
 void ControlPanel::loadFunction() {
 	ofSetDataPathRoot(DEFAULT_DIR);
 	functionFile = ofSystemLoadDialog("Select fractal function", false, ofToDataPath("")).getPath();
-	isFunctionChanged = true;
-	isMeshChanged = true;
+	if (functionCallback)
+		functionCallback();
+	if (redrawCallback)
+		redrawCallback();
 }

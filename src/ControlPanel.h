@@ -13,13 +13,11 @@ public:
 	void registerAlgorithmCallback(function<void()> f);
 
 	ofxPanelExtended GUI;
-	bool isDrawing,
-		isMeshChanged,
-		isAlgorithmChanged,
-		isFunctionChanged,
-		isResChanged;
-	int res;
-	ofParameter<bool> isMC, isDMC, isWireframe;
+	bool isDrawing;
+	int res();
+	int layers();
+	float stride();
+	float zoom();
 	ofParameterGroup fractalParams, positionParams;
 	ofParameter<float> fps;
 	string functionFile;
@@ -46,5 +44,8 @@ protected:
 	ofParameter<float> paramA, paramB, paramC, paramD, paramE, paramF, paramG, paramH, extent;
 	ofParameter<ofVec3f> centre;
 	ofParameter<bool> res64, res128, res256, res512;
+	ofParameter<bool> isMC, isDMC, isWireframe;
 	ofxLabel vertices, polygons;
+
+	int m_res, m_layers;
 };

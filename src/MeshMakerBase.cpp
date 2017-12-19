@@ -15,23 +15,23 @@ MeshMakerBase::MeshMakerBase(ControlPanel &c) : control(c)  {
 	buildNextLayerCS.linkProgram();
 	buildFinalLayerCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/Common/BuildFinalLayer.glsl");
 	buildFinalLayerCS.linkProgram();
-	layers = 8;
 }
 
 void MeshMakerBase::getPointsAndCases() {
 	glUseProgram(getPointsCS.getProgram());
-	getPointsCS.setUniform1i("res", 512);
-	getPointsCS.setUniform1f("stride", 0.5);
-	int numGroups = 64;
+	getPointsCS.setUniform1i("res", control.res());
+	getPointsCS.setUniform1f("stride", control.stride());
+	int numGroups = control.res() >> 3;
 	glDispatchCompute(numGroups, numGroups, numGroups);
 	glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT);
 	glUseProgram(getCasesCS.getProgram());
+	getCasesCS.setUniform1i("resMinus1", control.res()-1);
 	glDispatchCompute(numGroups, numGroups, numGroups);
 	glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT);
 }
 
 void MeshMakerBase::buildPyramidsFromBaseLayer() {
-	for (size_t i = layers - 1; i > 2; i--) {
+	for (size_t i = control.layers() - 1; i > 2; i--) {
 		int numGroups = 1 << (i - 2);
 		glBindTextureUnit(2, BufferBundle::instance().pyramidA[i]);
 		glBindImageTexture(2, BufferBundle::instance().pyramidA[i - 1], 0, GL_FALSE, 0, GL_WRITE_ONLY, BufferBundle::FORMAT_BY_LAYER_A[i - 1]);
