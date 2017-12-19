@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxBaseGui.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxButton.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxGuiGroup.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxGuiGroupExtended.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxGuiMatrix.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxLabel.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxMinimalButton.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxMinimalToggle.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxPanel.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxPanelExtended.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxSlider.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxSliderGroup.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\addons\ofxGuiExtended\src\ofxToggle.cpp">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BufferBundle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ControlPanel.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LookupTables.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshMakerBase.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshMakerMarchingCubes.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons">
+      <UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGuiExtended">
+      <UniqueIdentifier>{39B5852E-7F7D-529A-E93B-1F2C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="addons\ofxGuiExtended\src">
+      <UniqueIdentifier>{CDB195B0-A6DE-7083-7BBF-FD31}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxBaseGui.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxButton.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxGui.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxGuiExtended.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxGuiGroup.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxGuiGroupExtended.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxGuiMatrix.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxLabel.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxMinimalButton.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxMinimalToggle.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxPanel.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxPanelExtended.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxSlider.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxSliderGroup.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxToggle.h">
+      <Filter>addons\ofxGuiExtended\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BufferBundle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ControlPanel.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LookupTables.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshMakerBase.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshMakerMarchingCubes.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+</Project>
