@@ -21,8 +21,8 @@ void MeshMakerBase::getPointsAndCases() {
 	glUseProgram(getPointsCS.getProgram());
 	getPointsCS.setUniform1i("res", control.res());
 	getPointsCS.setUniform1f("stride", control.stride());
-	int numGroups = control.res() >> 3;
-	glDispatchCompute(numGroups, numGroups, numGroups);
+	int numGroups = control.res() >> 2;
+	glDispatchCompute(numGroups+1, numGroups+1, numGroups+1);
 	glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT);
 	glUseProgram(getCasesCS.getProgram());
 	getCasesCS.setUniform1i("resMinus1", control.res()-1);

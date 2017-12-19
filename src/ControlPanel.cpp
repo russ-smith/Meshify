@@ -135,7 +135,7 @@ float ControlPanel::stride() {
 }
 
 float ControlPanel::zoom() {
-	return 10 / extent;
+	return 5 / extent;
 }
 
 //load fractal function file from disk
