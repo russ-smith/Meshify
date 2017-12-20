@@ -5,8 +5,10 @@ ControlPanel::ControlPanel() {
 	DEFAULT_DIR = ofToDataPath("", true);
 	m_res = 64;
 	m_layers = 5;
-	GUI.setup("Controls");
-	fractalParams.setName("Fractal Parameters");
+
+	//setup main GUI
+	meshGUI.setup("Controls");
+	functionParams.setName("Function Parameters");
 	positionParams.setName("Position Parameters");
 	iterations.addListener(this, &ControlPanel::iParamsChanged);
 	paramA.addListener(this, &ControlPanel::fParamsChanged);
@@ -19,15 +21,15 @@ ControlPanel::ControlPanel() {
 	paramH.addListener(this, &ControlPanel::fParamsChanged);
 	extent.addListener(this, &ControlPanel::fParamsChanged);
 	centre.addListener(this, &ControlPanel::vParamsChanged);
-	fractalParams.add(iterations.set("Iterations", 15, 1, 100));
-	fractalParams.add(paramA.set("A", 0, -1, 1));
-	fractalParams.add(paramB.set("B", 0, -1, 1));
-	fractalParams.add(paramC.set("C", 0, -1, 1));
-	fractalParams.add(paramD.set("D", 0, -1, 1));
-	fractalParams.add(paramE.set("E", 0, -1, 1));
-	fractalParams.add(paramF.set("F", 0, -1, 1));
-	fractalParams.add(paramG.set("G", 0, -1, 1));
-	fractalParams.add(paramH.set("H", 0, -1, 1));
+	functionParams.add(iterations.set("Iterations", 15, 1, 100));
+	functionParams.add(paramA.set("A", 0, -1, 1));
+	functionParams.add(paramB.set("B", 0, -1, 1));
+	functionParams.add(paramC.set("C", 0, -1, 1));
+	functionParams.add(paramD.set("D", 0, -1, 1));
+	functionParams.add(paramE.set("E", 0, -1, 1));
+	functionParams.add(paramF.set("F", 0, -1, 1));
+	functionParams.add(paramG.set("G", 0, -1, 1));
+	functionParams.add(paramH.set("H", 0, -1, 1));
 	positionParams.add(centre.set("Centre", ofVec3f(0), ofVec3f(-5), ofVec3f(5)));
 	positionParams.add(extent.set("Extent", 4, 0.1, 10));
 	resMatrix.setup("Resolution", 4);
@@ -40,9 +42,9 @@ ControlPanel::ControlPanel() {
 	resMatrix.setBorderColor(ofColor::darkGrey);
 	resMatrix.setElementHeight(26);
 	resMatrix.allowMultipleActiveToggles(false);
-	GUI.add(new ofxGuiGroup(fractalParams));
-	GUI.add(new ofxGuiGroup(positionParams));
-	GUI.add(&resMatrix);
+	meshGUI.add(new ofxGuiGroup(functionParams));
+	meshGUI.add(new ofxGuiGroup(positionParams));
+	meshGUI.add(&resMatrix);
 	algoMatrix.setup("Isosurface Algorithm", 1);
 	algoMatrix.setName("Algorithm");
 	algoMatrix.add(new ofxMinimalToggle(isMC.set("Marching Cubes", true)));
@@ -51,17 +53,24 @@ ControlPanel::ControlPanel() {
 	algoMatrix.setBorderColor(ofColor::darkGrey);
 	algoMatrix.setElementHeight(16);
 	algoMatrix.allowMultipleActiveToggles(false);
-	GUI.add(&algoMatrix);
+	meshGUI.add(&algoMatrix);
 	loadButton.setup("   Load new function", 200, 30);
 	loadButton.addListener(this, &ControlPanel::loadFunction);
-	GUI.add(&loadButton);
-	GUI.add(new ofxMinimalToggle(isWireframe.set("Wireframe", false)));
+	meshGUI.add(&loadButton);
+	meshGUI.add(new ofxMinimalToggle(isWireframe.set("Wireframe", false)));
 	vertices.setup("Vertices", "0", 200, 20);
 	polygons.setup("Polygons", "0", 200, 20);
-	GUI.add(&vertices);
-	GUI.add(&polygons);
-	GUI.add(new ofxSlider<float>(fps.set("FPS", 0, 0, 30)));
+	meshGUI.add(&vertices);
+	meshGUI.add(&polygons);
 	functionFile = ofToDataPath("DistanceFunctions/sphere.glsl");
+
+	//setup rendering GUI
+	renderGUI.setup("Rendering");
+	lightParams.setName("Light Parameters");
+	lightParams.add(light0Color.set("light0Color", ofVec3f(0.5), ofVec3f(0), ofVec3f(1)));
+	lightParams.add(light1Color.set("light1Color", ofVec3f(0.5), ofVec3f(0), ofVec3f(1)));
+	renderGUI.add(new ofxGuiGroup(lightParams));
+	renderGUI.setPosition(ofGetWidth() - 200, 0);
 }
 
 //callback methods for parameter changes

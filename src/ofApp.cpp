@@ -40,7 +40,9 @@ void ofApp::draw(){
 	//GUI needs depth and cull disabled to render properly
 	ofDisableDepthTest();
 	glDisable(GL_CULL_FACE);
-	control.GUI.draw();
+	control.meshGUI.draw();
+	control.renderGUI.setPosition(ofGetWidth() - 200, 0);
+	control.renderGUI.draw();
 }
 
 //--------------------------------------------------------------

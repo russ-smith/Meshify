@@ -12,14 +12,13 @@ public:
 	void registerFunctionCallback(function<void()> f);
 	void registerAlgorithmCallback(function<void()> f);
 
-	ofxPanelExtended GUI;
-	bool isDrawing;
+	ofxPanelExtended meshGUI, renderGUI;
+	
 	int res();
 	int layers();
 	float stride();
 	float zoom();
-	ofParameterGroup fractalParams, positionParams;
-	ofParameter<float> fps;
+	ofParameterGroup functionParams, positionParams, lightParams, materialParams;
 	string functionFile;
 	string DEFAULT_DIR;
 
@@ -42,10 +41,11 @@ protected:
 	ofxMinimalButton loadButton;
 	ofParameter<int> iterations;
 	ofParameter<float> paramA, paramB, paramC, paramD, paramE, paramF, paramG, paramH, extent;
-	ofParameter<ofVec3f> centre;
-	ofParameter<bool> res64, res128, res256, res512;
-	ofParameter<bool> isMC, isDMC, isWireframe;
+	ofParameter<ofVec3f> centre, light0Color, light1Color;
+	ofParameter<ofVec2f> light0Pos, light1Pos;
+	ofParameter<bool> res64, res128, res256, res512, isMC, isDMC, isWireframe;
 	ofxLabel vertices, polygons;
 
 	int m_res, m_layers;
+	bool isMainDrawing, isRenderDrawing;
 };

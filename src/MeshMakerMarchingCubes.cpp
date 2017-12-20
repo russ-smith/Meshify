@@ -82,7 +82,7 @@ void MeshMakerMarchingCubes::getPositionsAndNormals() {
 	getPositionsAndNormalsCS.setUniform1i("total", numVerts);
 	getPositionsAndNormalsCS.setUniform1i("res", control.res());
 	getPositionsAndNormalsCS.setUniform1f("stride", control.stride());
-	getPositionsAndNormalsCS.setUniforms(control.fractalParams);
+	getPositionsAndNormalsCS.setUniforms(control.functionParams);
 	glDispatchCompute((numVerts + 63) / 64, 1, 1);
 	glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 }
