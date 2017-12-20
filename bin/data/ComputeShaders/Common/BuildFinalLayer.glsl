@@ -6,10 +6,6 @@ layout(local_size_x = 4, local_size_y = 4, local_size_z = 4) in;
 
 layout(binding=2) uniform usampler3D A8;
 layout(binding=3) uniform usampler3D B8;
-//layout(binding=4) uniform usampler3D A4;
-//layout(binding=5) uniform usampler3D B4;
-//layout(binding=6) uniform usampler3D A2;
-//layout(binding=7) uniform usampler3D B2;
 layout(binding=2) uniform writeonly uimage3D A4w;
 layout(binding=3) uniform writeonly uimage3D B4w;
 layout(binding=4) uniform writeonly uimage3D A2w;
