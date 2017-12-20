@@ -57,8 +57,8 @@ void MeshMakerMarchingCubes::buildBaseLayer() {
 }
 
 void MeshMakerMarchingCubes::getVertices() {
-	//glNamedBufferData(BufferBundle::instance().vertexBuff, 3 * numVerts * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
-	//glNamedBufferData(BufferBundle::instance().normalBuff, 3 * numVerts * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+	glNamedBufferData(BufferBundle::instance().vertexBuff, 3 * numVerts * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+	glNamedBufferData(BufferBundle::instance().normalBuff, 3 * numVerts * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
 	glBindTextures(2, 8, BufferBundle::instance().pyramidA);
 	glUseProgram(getVerticesCS.getProgram());
 	getVerticesCS.setUniform1i("total", numVerts);
@@ -68,7 +68,7 @@ void MeshMakerMarchingCubes::getVertices() {
 }
 
 void MeshMakerMarchingCubes::getTriangles() {
-	//glNamedBufferData(BufferBundle::instance().elementBuff, 3 * numPolys * sizeof(GLuint), nullptr, GL_DYNAMIC_DRAW);
+	glNamedBufferData(BufferBundle::instance().elementBuff, 3 * numPolys * sizeof(GLuint), nullptr, GL_DYNAMIC_DRAW);
 	glBindTextures(2, 8, BufferBundle::instance().pyramidB);
 	glUseProgram(getTrianglesCS.getProgram());
 	getTrianglesCS.setUniform1i("total", numPolys);
@@ -82,6 +82,7 @@ void MeshMakerMarchingCubes::getPositionsAndNormals() {
 	getPositionsAndNormalsCS.setUniform1i("total", numVerts);
 	getPositionsAndNormalsCS.setUniform1i("res", control.res());
 	getPositionsAndNormalsCS.setUniform1f("stride", control.stride());
+	getPositionsAndNormalsCS.setUniforms(control.fractalParams);
 	glDispatchCompute((numVerts + 63) / 64, 1, 1);
 	glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 }

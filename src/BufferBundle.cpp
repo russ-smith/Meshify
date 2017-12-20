@@ -52,14 +52,11 @@ BufferBundle::BufferBundle() {
 
 	//vertex data buffers
 	glCreateBuffers(1, &vertexBuff);
-	glNamedBufferStorage(vertexBuff, 50000000, nullptr, GL_MAP_READ_BIT);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, vertexBuff);			//bind this buffer twice
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, vertexBuff);			//gets read and written as different format in some shaders
 	glCreateBuffers(1, &normalBuff);
-	glNamedBufferStorage(normalBuff, 50000000, nullptr, 0);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, normalBuff);
 	glCreateBuffers(1, &elementBuff);
-	glNamedBufferStorage(elementBuff, 50000000, nullptr, GL_MAP_READ_BIT);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, elementBuff);
 
 	//vertex array for rendering
