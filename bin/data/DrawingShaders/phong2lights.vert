@@ -1,4 +1,4 @@
-#version 430
+#version 440 core
 
 uniform mat4 modelViewProjectionMatrix;
 uniform mat4 modelViewMatrix;

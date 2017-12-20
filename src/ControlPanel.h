@@ -11,8 +11,7 @@ public:
 	void registerRedrawCallback(function<void()> f);
 	void registerFunctionCallback(function<void()> f);
 	void registerAlgorithmCallback(function<void()> f);
-
-	ofxPanelExtended meshGUI, renderGUI;
+	void draw();
 	
 	int res();
 	int layers();
@@ -36,16 +35,17 @@ protected:
 	function<void()> functionCallback;
 	function<void()> algorithmCallback;
 
+	ofxPanelExtended meshGUI, renderGUI;
 	ofxGuiMatrix resMatrix;
 	ofxGuiMatrix algoMatrix;
 	ofxMinimalButton loadButton;
 	ofParameter<int> iterations;
 	ofParameter<float> paramA, paramB, paramC, paramD, paramE, paramF, paramG, paramH, extent;
 	ofParameter<ofVec3f> centre, light0Color, light1Color;
-	ofParameter<ofVec2f> light0Pos, light1Pos;
+	ofParameter<ofVec2f> light0Dir, light1Dir;
 	ofParameter<bool> res64, res128, res256, res512, isMC, isDMC, isWireframe;
 	ofxLabel vertices, polygons;
 
 	int m_res, m_layers;
-	bool isMainDrawing, isRenderDrawing;
+	bool isMeshGUIDrawing = true, isRenderGUIDrawing = true;
 };

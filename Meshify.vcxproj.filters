@@ -75,6 +75,9 @@
     <Filter Include="addons\ofxGuiExtended\src">
       <UniqueIdentifier>{CDB195B0-A6DE-7083-7BBF-FD31}</UniqueIdentifier>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{77659348-8c1d-48aa-b3bd-7b0a78d011ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxBaseGui.h">
@@ -143,5 +146,13 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\data\DrawingShaders\phong2lights.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\DrawingShaders\phong2lights.vert">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

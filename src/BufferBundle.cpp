@@ -70,4 +70,9 @@ BufferBundle::BufferBundle() {
 	glEnableVertexArrayAttrib(VAO, 0);
 	glEnableVertexArrayAttrib(VAO, 1);
 	glVertexArrayElementBuffer(VAO, elementBuff);
+
+	//uniform buffers for light and material data
+	glCreateBuffers(1, &lightUniBuff);
+	glNamedBufferStorage(lightUniBuff, 16 * sizeof(GLfloat), nullptr, GL_DYNAMIC_STORAGE_BIT);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 0, lightUniBuff);
 }

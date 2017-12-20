@@ -4,19 +4,24 @@
 void ofApp::setup(){
 	//instantiate buffers before doing anything else!
 	BufferBundle::instance();
-	control.registerAlgorithmCallback([&]() { changeAlgorithm(); });
+	control.registerAlgorithmCallback([this]() { changeAlgorithm(); });
+	control.registerRedrawCallback([this]() {needsRedraw = true; });
 	maker = make_unique<MeshMakerMarchingCubes>(control);
 	maker->makeMesh();
 	ofSetVerticalSync(true);
 	ofSetFrameRate(30);
 	lightColor = ofVec3f(1);
-	renderShader.load("DrawingShaders/lightsphong");
+	renderShader.load("DrawingShaders/phong2lights");
 	cam.setDistance(10);
 	cam.setNearClip(1);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	if (needsRedraw) {
+		maker->makeMesh();
+		needsRedraw = false;
+	}
 }
 
 //--------------------------------------------------------------
@@ -27,11 +32,19 @@ void ofApp::draw(){
 	cam.begin(); 
 	float s = control.zoom();
 	ofScale(s, s, s);
-	lightPos.set(150 * sin(ofGetElapsedTimef()), 150 * cos(ofGetElapsedTimef()), 200);
+	//lightPos.set(150 * sin(ofGetElapsedTimef()), 150 * cos(ofGetElapsedTimef()), 200);
 	renderShader.begin();
 	renderShader.setUniformMatrix4f("normalMatrix", ofGetCurrentNormalMatrix());
-	renderShader.setUniform3f("lightPos", lightPos * ofGetCurrentViewMatrix());
-	renderShader.setUniform3f("lightColor", lightColor);
+	ofVec3f col = control.lightParams.getVec3f("light0Color");
+	renderShader.setUniform3f("light0Color", col);
+	col = control.lightParams.getVec3f("light1Color");
+	renderShader.setUniform3f("light1Color", col);
+	ofVec2f dir = control.lightParams.getVec2f("light0Dir");
+	ofVec3f realDir = ofVec3f(sin(dir.y)*cos(dir.x), cos(dir.y), sin(dir.y)*sin(dir.x));
+	renderShader.setUniform3f("light0Dir", realDir);
+	dir = control.lightParams.getVec2f("light1Dir");
+	realDir = ofVec3f(sin(dir.y)*cos(dir.x), cos(dir.y), sin(dir.y)*sin(dir.x));
+	renderShader.setUniform3f("light1Dir", realDir);
 	maker->render();
 	renderShader.end();
 	cam.end();
@@ -40,9 +53,7 @@ void ofApp::draw(){
 	//GUI needs depth and cull disabled to render properly
 	ofDisableDepthTest();
 	glDisable(GL_CULL_FACE);
-	control.meshGUI.draw();
-	control.renderGUI.setPosition(ofGetWidth() - 200, 0);
-	control.renderGUI.draw();
+	control.draw();
 }
 
 //--------------------------------------------------------------
@@ -60,6 +71,10 @@ void ofApp::changeAlgorithm() {
 	maker = make_unique<MeshMakerMarchingCubes>(control);
 
 	maker->makeMesh();
+}
+
+void ofApp::setLightAndMaterial() {
+	
 }
 
 

@@ -1,8 +1,7 @@
 #include "MeshMakerMarchingCubes.h"
 
 MeshMakerMarchingCubes::MeshMakerMarchingCubes(ControlPanel &c) : MeshMakerBase(c) {
-	control.registerRedrawCallback([&]() { makeMesh(); });
-	control.registerFunctionCallback([&]() { setupFunction(); });
+	control.registerFunctionCallback([this]() { setupFunction(); });
 	buildBaseLayerCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/MC/BuildBaseLayerMC.glsl");
 	buildBaseLayerCS.linkProgram();
 	getVerticesCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/MC/GetVerticesMC.glsl");
@@ -16,21 +15,6 @@ MeshMakerMarchingCubes::MeshMakerMarchingCubes(ControlPanel &c) : MeshMakerBase(
 void MeshMakerMarchingCubes::makeMesh() {
 	ofstream fout("logfile.txt");
 	getPointsAndCases();
-	/*GLuint* points = new GLuint[65 * 65 * 65];
-	glGetTextureSubImage(BufferBundle::instance().baseLayerTex, 0, 0, 0, 0, 65, 65, 65, GL_RED_INTEGER, GL_UNSIGNED_INT, 65 * 65 * 65 * 4, points);
-	for (size_t i = 0; i < 65 * 65 * 65; i++) {
-		if (i % 65 == 0) fout << endl;
-		if (i % (65 * 65) == 0) fout << endl;
-		fout << (int)points[i];
-	}
-	fout << "\n\n\n\n\n\n\n\n";
-	GLubyte* cases = new GLubyte[64 * 64 * 64];
-	glGetTextureSubImage(BufferBundle::instance().cubeCaseTex, 0, 0, 0, 0, 64, 64, 64, GL_RED_INTEGER, GL_UNSIGNED_BYTE, 64 * 64 * 64, cases);
-	for (size_t i = 0; i < 64 * 64 * 64; i++) {
-		if (i % 64 == 0) fout << endl;
-		if (i % (64 * 64) == 0) fout << endl;
-		fout << setw(3) << (int)cases[i];
-	}*/
 	buildBaseLayer();
 	buildPyramidsFromBaseLayer();
 	GLuint* mappedBuff = static_cast<GLuint*>(glMapNamedBuffer(BufferBundle::instance().totalsBuff, GL_READ_ONLY));

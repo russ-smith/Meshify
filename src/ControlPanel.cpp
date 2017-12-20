@@ -62,13 +62,15 @@ ControlPanel::ControlPanel() {
 	polygons.setup("Polygons", "0", 200, 20);
 	meshGUI.add(&vertices);
 	meshGUI.add(&polygons);
-	functionFile = ofToDataPath("DistanceFunctions/sphere.glsl");
+	functionFile = ofToDataPath("DistanceFunctions/polyhedra.glsl");
 
 	//setup rendering GUI
 	renderGUI.setup("Rendering");
 	lightParams.setName("Light Parameters");
 	lightParams.add(light0Color.set("light0Color", ofVec3f(0.5), ofVec3f(0), ofVec3f(1)));
+	lightParams.add(light0Dir.set("light0Dir", ofVec2f(1), ofVec2f(0), ofVec2f(TWO_PI, PI)));
 	lightParams.add(light1Color.set("light1Color", ofVec3f(0.5), ofVec3f(0), ofVec3f(1)));
+	lightParams.add(light1Dir.set("light1Dir", ofVec2f(2), ofVec2f(0), ofVec2f(TWO_PI, PI)));
 	renderGUI.add(new ofxGuiGroup(lightParams));
 	renderGUI.setPosition(ofGetWidth() - 200, 0);
 }
@@ -129,6 +131,17 @@ void ControlPanel::registerFunctionCallback(function<void()> f) {
 
 void ControlPanel::registerAlgorithmCallback(function<void()> f) {
 	algorithmCallback = f;
+}
+
+void ControlPanel::draw() {
+	if (isMeshGUIDrawing) {
+		meshGUI.setPosition(0, 0);
+		meshGUI.draw();
+	}
+	if (isRenderGUIDrawing) {
+		renderGUI.setPosition(ofGetWidth() - 200, 0);
+		renderGUI.draw();
+	}
 }
 
 int ControlPanel::res() {

@@ -23,6 +23,8 @@ public:
 		vertexBuff,
 		normalBuff,
 		elementBuff,
+		lightUniBuff,
+		materialUniBuff,
 		VAO,
 		pyramidA[8],
 		pyramidB[8],

@@ -21,9 +21,10 @@
 bld/
 [Oo]bj/
 
-#exclude built files but keep OF data folder
-[Bb]in/*
-![Bb]in/data/
+*.exe
+*.dll
+*.exp
+*.lib
 
 # Visual Studio 2015 cache/options directory
 .vs/
