@@ -145,6 +145,13 @@ void ControlPanel::draw() {
 	}
 }
 
+void ControlPanel::toggleGUI(int which) {
+	if (which == 0)
+		isMeshGUIDrawing = !isMeshGUIDrawing;
+	else if (which == 1)
+		isRenderGUIDrawing = !isRenderGUIDrawing;
+}
+
 int ControlPanel::res() {
 	return m_res;
 }

@@ -12,12 +12,13 @@ public:
 	void registerFunctionCallback(function<void()> f);
 	void registerAlgorithmCallback(function<void()> f);
 	void draw();
-	
+	void toggleGUI(int which);
 	int res();
 	int layers();
 	float stride();
 	float zoom();
 	ofParameterGroup functionParams, positionParams, lightParams, materialParams;
+	ofParameter<bool> isWireframe;
 	string functionFile;
 	string DEFAULT_DIR;
 
@@ -43,7 +44,7 @@ protected:
 	ofParameter<float> paramA, paramB, paramC, paramD, paramE, paramF, paramG, paramH, extent;
 	ofParameter<ofVec3f> centre, light0Color, light1Color;
 	ofParameter<ofVec2f> light0Dir, light1Dir;
-	ofParameter<bool> res64, res128, res256, res512, isMC, isDMC, isWireframe;
+	ofParameter<bool> res64, res128, res256, res512, isMC, isDMC;
 	ofxLabel vertices, polygons;
 
 	int m_res, m_layers;

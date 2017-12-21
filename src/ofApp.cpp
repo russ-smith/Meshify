@@ -13,7 +13,7 @@ void ofApp::setup(){
 	lightColor = ofVec3f(1);
 	renderShader.load("DrawingShaders/phong2lights");
 	cam.setDistance(10);
-	cam.setNearClip(1);
+	cam.setNearClip(0.5);
 }
 
 //--------------------------------------------------------------
@@ -28,23 +28,19 @@ void ofApp::update(){
 void ofApp::draw(){
 	ofBackgroundGradient(ofColor::lightSkyBlue, ofColor::black);
 	ofEnableDepthTest();
-	glEnable(GL_CULL_FACE);
+	if (control.isWireframe) {
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else {
+		glEnable(GL_CULL_FACE);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
 	cam.begin(); 
 	float s = control.zoom();
 	ofScale(s, s, s);
-	//lightPos.set(150 * sin(ofGetElapsedTimef()), 150 * cos(ofGetElapsedTimef()), 200);
 	renderShader.begin();
 	renderShader.setUniformMatrix4f("normalMatrix", ofGetCurrentNormalMatrix());
-	ofVec3f col = control.lightParams.getVec3f("light0Color");
-	renderShader.setUniform3f("light0Color", col);
-	col = control.lightParams.getVec3f("light1Color");
-	renderShader.setUniform3f("light1Color", col);
-	ofVec2f dir = control.lightParams.getVec2f("light0Dir");
-	ofVec3f realDir = ofVec3f(sin(dir.y)*cos(dir.x), cos(dir.y), sin(dir.y)*sin(dir.x));
-	renderShader.setUniform3f("light0Dir", realDir);
-	dir = control.lightParams.getVec2f("light1Dir");
-	realDir = ofVec3f(sin(dir.y)*cos(dir.x), cos(dir.y), sin(dir.y)*sin(dir.x));
-	renderShader.setUniform3f("light1Dir", realDir);
+	setLightAndMaterial();
 	maker->render();
 	renderShader.end();
 	cam.end();
@@ -58,7 +54,10 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	maker->makeMesh();
+	if (key == '1')
+		control.toggleGUI(0);
+	else if (key == '2')
+		control.toggleGUI(1);
 }
 
 //--------------------------------------------------------------
@@ -74,7 +73,16 @@ void ofApp::changeAlgorithm() {
 }
 
 void ofApp::setLightAndMaterial() {
-	
+	ofVec3f col = control.lightParams.getVec3f("light0Color");
+	renderShader.setUniform3f("light0Color", col);
+	col = control.lightParams.getVec3f("light1Color");
+	renderShader.setUniform3f("light1Color", col);
+	ofVec2f dir = control.lightParams.getVec2f("light0Dir");
+	ofVec3f realDir = ofVec3f(sin(dir.y)*cos(dir.x), cos(dir.y), sin(dir.y)*sin(dir.x));
+	renderShader.setUniform3f("light0Dir", realDir);
+	dir = control.lightParams.getVec2f("light1Dir");
+	realDir = ofVec3f(sin(dir.y)*cos(dir.x), cos(dir.y), sin(dir.y)*sin(dir.x));
+	renderShader.setUniform3f("light1Dir", realDir);
 }
 
 
