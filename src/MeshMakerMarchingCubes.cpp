@@ -13,7 +13,6 @@ MeshMakerMarchingCubes::MeshMakerMarchingCubes(ControlPanel &c) : MeshMakerBase(
 }
 
 void MeshMakerMarchingCubes::makeMesh() {
-	ofstream fout("logfile.txt");
 	getPointsAndCases();
 	buildBaseLayer();
 	buildPyramidsFromBaseLayer();
@@ -21,8 +20,6 @@ void MeshMakerMarchingCubes::makeMesh() {
 	numVerts = mappedBuff[0];
 	numPolys = mappedBuff[1];
 	glUnmapNamedBuffer(BufferBundle::instance().totalsBuff);
-	
-	fout<< "\n\n\n" << numVerts << "  " << numPolys << "\n\n";
 	getVertices();
 	getTriangles();
 	getPositionsAndNormals();
