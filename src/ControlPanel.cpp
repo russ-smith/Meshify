@@ -45,6 +45,7 @@ ControlPanel::ControlPanel() {
 	meshGUI.add(new ofxGuiGroup(functionParams));
 	meshGUI.add(new ofxGuiGroup(positionParams));
 	meshGUI.add(&resMatrix);
+	meshGUI.add(new ofxMinimalToggle(isWireframe.set("Wireframe", false)));
 	algoMatrix.setup("Isosurface Algorithm", 1);
 	algoMatrix.setName("Algorithm");
 	algoMatrix.add(new ofxMinimalToggle(isMC.set("Marching Cubes", true)));
@@ -57,7 +58,7 @@ ControlPanel::ControlPanel() {
 	loadButton.setup("   Load new function", 200, 30);
 	loadButton.addListener(this, &ControlPanel::loadFunction);
 	meshGUI.add(&loadButton);
-	meshGUI.add(new ofxMinimalToggle(isWireframe.set("Wireframe", false)));
+	
 	vertices.setup("Vertices", "0", 200, 20);
 	polygons.setup("Polygons", "0", 200, 20);
 	meshGUI.add(&vertices);
