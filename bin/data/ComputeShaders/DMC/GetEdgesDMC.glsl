@@ -7,6 +7,8 @@ layout (local_size_x = 64) in;
 
 uniform int layers;
 uniform int total;
+uniform int res;
+uniform float stride;
 
 layout (binding = 1) uniform usampler3D cubeCases;
 layout (binding = 2) uniform usampler3D pyramid[8];
@@ -18,9 +20,11 @@ struct vector3{
 };
 
 //write out edge positions into what will become the normal buffer later
-layout (binding = 2, std430) writeonly buffer n{
+layout (binding = 1, std430) writeonly buffer n{
 	vector3 positions[];
 };
+
+float DE(vec3 p);
 
 void main(){
 	uint id = gl_GlobalInvocationID.x;
@@ -85,14 +89,14 @@ void main(){
 		pos *= 2;
 
 		index = int(texelFetch(cubeCases, pos, 0).r);
-		edges = texelFetch(newVerts, index >> 2, 0);
+		edges = texelFetch(newEdges, index >> 2, 0);
 		add = edges.a;
 		if(count+add > id){
 			break;
 		}
 		count += add;
 		index = int(texelFetch(cubeCases, pos+ivec3(1,0,0), 0).r);
-		edges = texelFetch(newVerts, index >> 2, 0);
+		edges = texelFetch(newEdges, index >> 2, 0);
 		add = edges.a;
 		if(count+add > id){
 			pos += ivec3 (1,0,0);
@@ -149,7 +153,7 @@ void main(){
 	}
 
 	if(count==id){
-		imageStore(edgePositions, pos, uvec4(count, 0,0,0));
+		imageStore(edgeNumbers, pos, uvec4(count, 0,0,0));
 	}
 	count = uint(id)-count;
 	uint edge;
