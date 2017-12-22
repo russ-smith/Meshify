@@ -15,7 +15,7 @@ uniform float stride;
 layout (binding = 1) uniform usampler3D cubeCases;
 layout (binding = 2) uniform usampler3D pyramid[8];
 layout (binding = 12) uniform usampler1D newVerts;
-layout (binding = 0) uniform writeonly uimage3D vertPositions;
+layout (binding = 0) uniform writeonly uimage3D vertNumbers;
 
 struct vector3{									
 	float x,y,z;
@@ -158,7 +158,7 @@ void main(){
 	}
 
 	if(count==id){
-		imageStore(vertPositions, pos, uvec4(count, 0,0,0));
+		imageStore(vertNumbers, pos, uvec4(count, 0,0,0));
 	}
 	count = uint(id)-count;
 	uint edge;
@@ -168,7 +168,7 @@ void main(){
 		}
 	}
 
-	//vertMarkers[id].data = (edge << 30) + (pos.x << 20) + (pos.y << 10) + pos.z ;
+	//lerp position between edge endpoints depending on distance from surface
 	vec3 posA = vec3(pos - (res/2 - 1)) * stride;
 	vec3 posB;
 	if (edge==0) posB = posA - vec3(stride, 0, 0);
