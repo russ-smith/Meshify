@@ -61,7 +61,7 @@ void MeshMakerMarchingCubes::getTriangles() {
 void MeshMakerMarchingCubes::setupFunction() {
 	setupConcatenatedShader(getPointsCS, "ComputeShaders/Common/GetPoints.glsl", control.functionFile);
 	getPointsCS.linkProgram();
-	setupConcatenatedShader(getVerticesCS, "ComputeShaders/MC/GetPositionsAndNormalsMC.glsl", control.functionFile);
+	setupConcatenatedShader(getVerticesCS, "ComputeShaders/MC/GetVerticesMC.glsl", control.functionFile);
 	getVerticesCS.linkProgram();
 }
 
