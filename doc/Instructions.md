@@ -44,6 +44,12 @@ Scroll or right-drag to zoom.
 
 Middle-drag to pan.
 
+Left-and-right click to reset.
+
+## Hiding the GUIs
+
+Press 1 or 2 to toggle the left and right GUIs respectively
+
 ## Writing distance functions
 
 You can write your own distance functions in GLSL to use in Meshify.
