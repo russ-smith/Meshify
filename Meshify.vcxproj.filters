@@ -184,5 +184,11 @@
     <None Include="bin\data\ComputeShaders\MC\GetVerticesMC.glsl">
       <Filter>shaders</Filter>
     </None>
+    <None Include="bin\data\ComputeShaders\DMC\GetEdgesDMC.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\DMC\GetVerticesDMC.glsl">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

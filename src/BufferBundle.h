@@ -32,7 +32,8 @@ public:
 		MCNumTrisTableTex,
 		MCTriTableTex,
 		DMCNumVertsTableTex,
-		DMCVertToEdgeTableTex;
+		DMCVertToEdgeTableTex,
+		DMCVertBeginTableTex;
 private:
 	BufferBundle();
 };

@@ -42,6 +42,7 @@ BufferBundle::BufferBundle() {
 	glCreateTextures(GL_TEXTURE_1D, 1, &MCTriTableTex);
 	glCreateTextures(GL_TEXTURE_1D, 1, &DMCNumVertsTableTex);
 	glCreateTextures(GL_TEXTURE_1D, 1, &DMCVertToEdgeTableTex);
+	glCreateTextures(GL_TEXTURE_1D, 1, &DMCVertBeginTableTex);
 	glTextureStorage1D(newEdgeTableTex, 1, GL_RGBA8UI, 64);
 	glTextureSubImage1D(newEdgeTableTex, 0, 0, 64, GL_RGBA_INTEGER, GL_UNSIGNED_BYTE, &LookupTables::newEdgeTable);
 	glTextureStorage1D(MCNumTrisTableTex, 1, GL_R8UI, 256);
@@ -52,12 +53,14 @@ BufferBundle::BufferBundle() {
 	glTextureSubImage1D(DMCNumVertsTableTex, 0, 0, 256, GL_RED_INTEGER, GL_UNSIGNED_BYTE, &LookupTables::DMCNumVertsTable);
 	glTextureStorage1D(DMCVertToEdgeTableTex, 1, GL_R8I, 4096);
 	glTextureSubImage1D(DMCVertToEdgeTableTex, 0, 0, 4096, GL_RED_INTEGER, GL_BYTE, &LookupTables::DMCVertToEdgeTable);
+	glTextureStorage1D(DMCVertBeginTableTex, 1, GL_RGBA8UI, 256);
+	glTextureSubImage1D(DMCVertBeginTableTex, 0, 0, 256, GL_RGBA_INTEGER, GL_UNSIGNED_BYTE, &LookupTables::DMCVertBeginTable);
 	glBindTextureUnit(11, MCNumTrisTableTex);
 	glBindTextureUnit(12, newEdgeTableTex);
 	glBindTextureUnit(13, MCTriTableTex);
 	glBindTextureUnit(14, DMCNumVertsTableTex);
 	glBindTextureUnit(15, DMCVertToEdgeTableTex);
-
+	glBindTextureUnit(16, DMCVertBeginTableTex);
 	//vertex data buffers
 	glCreateBuffers(1, &vertexBuff);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, vertexBuff);			//bind this buffer twice

@@ -20,8 +20,17 @@ struct vector3{
 };
 
 //write out edge positions into what will become the normal buffer later
-layout (binding = 1, std430) writeonly buffer n{
+layout (binding = 2, std430) writeonly buffer p{
 	vector3 positions[];
+};
+
+struct edgemarker{
+	int p0, p1, p2, p3, p4, flip;
+};
+
+//store if an edge is 'flipped' i.e. needs its quad's winding order reversed in element buffer
+layout (binding = 3, std430) writeonly buffer e{
+	edgemarker[] edgeinfo;
 };
 
 float DE(vec3 p);
@@ -162,6 +171,8 @@ void main(){
 			edge = i;
 		}
 	}
+
+	edgeinfo[id].flip = (index & 64 > 0 ? 1 : 0);
 
 	//lerp position between edge endpoints depending on distance from surface
 	vec3 posA = vec3(pos - (res/2 - 1)) * stride;
