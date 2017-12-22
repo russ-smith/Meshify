@@ -12,7 +12,6 @@ private:
 	void buildBaseLayer();
 	void getVertices();
 	void getTriangles();
-	void getPositionsAndNormals();
 	void setupFunction() override;
-	ofShader buildBaseLayerCS, getVerticesCS, getTrianglesCS, getPositionsAndNormalsCS;
+	ofShader buildBaseLayerCS, getVerticesCS, getTrianglesCS;
 };

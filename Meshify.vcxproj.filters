@@ -178,9 +178,6 @@
     <None Include="bin\data\ComputeShaders\MC\BuildBaseLayerMC.glsl">
       <Filter>shaders</Filter>
     </None>
-    <None Include="bin\data\ComputeShaders\MC\GetPositionsAndNormalsMC.glsl">
-      <Filter>shaders</Filter>
-    </None>
     <None Include="bin\data\ComputeShaders\MC\GetTrianglesMC.glsl">
       <Filter>shaders</Filter>
     </None>

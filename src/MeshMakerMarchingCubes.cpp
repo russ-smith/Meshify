@@ -4,12 +4,10 @@ MeshMakerMarchingCubes::MeshMakerMarchingCubes(ControlPanel &c) : MeshMakerBase(
 	control.registerFunctionCallback([this]() { setupFunction(); });
 	buildBaseLayerCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/MC/BuildBaseLayerMC.glsl");
 	buildBaseLayerCS.linkProgram();
-	getVerticesCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/MC/GetVerticesMC.glsl");
+	setupConcatenatedShader(getVerticesCS, "ComputeShaders/MC/GetVerticesMC.glsl", control.functionFile);
 	getVerticesCS.linkProgram();
 	getTrianglesCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/MC/GetTrianglesMC.glsl");
 	getTrianglesCS.linkProgram();
-	setupConcatenatedShader(getPositionsAndNormalsCS, "ComputeShaders/MC/GetPositionsAndNormalsMC.glsl", control.functionFile);
-	getPositionsAndNormalsCS.linkProgram();
 }
 
 void MeshMakerMarchingCubes::makeMesh() {
@@ -22,7 +20,6 @@ void MeshMakerMarchingCubes::makeMesh() {
 	glUnmapNamedBuffer(BufferBundle::instance().totalsBuff);
 	getVertices();
 	getTriangles();
-	getPositionsAndNormals();
 	control.setLabels(numVerts, numPolys);
 }
 
@@ -44,8 +41,11 @@ void MeshMakerMarchingCubes::getVertices() {
 	glUseProgram(getVerticesCS.getProgram());
 	getVerticesCS.setUniform1i("total", numVerts);
 	getVerticesCS.setUniform1i("layers", control.layers());
+	getVerticesCS.setUniform1i("res", control.res());
+	getVerticesCS.setUniform1f("stride", control.stride());
+	getVerticesCS.setUniforms(control.functionParams);
 	glDispatchCompute((numVerts + 63) / 64, 1, 1);	
-	glMemoryBarrier(GL_BUFFER_UPDATE_BARRIER_BIT);
+	glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT | GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 }
 
 void MeshMakerMarchingCubes::getTriangles() {
@@ -58,20 +58,10 @@ void MeshMakerMarchingCubes::getTriangles() {
 	glMemoryBarrier(GL_ELEMENT_ARRAY_BARRIER_BIT);
 }
 
-void MeshMakerMarchingCubes::getPositionsAndNormals() {
-	glUseProgram(getPositionsAndNormalsCS.getProgram());
-	getPositionsAndNormalsCS.setUniform1i("total", numVerts);
-	getPositionsAndNormalsCS.setUniform1i("res", control.res());
-	getPositionsAndNormalsCS.setUniform1f("stride", control.stride());
-	getPositionsAndNormalsCS.setUniforms(control.functionParams);
-	glDispatchCompute((numVerts + 63) / 64, 1, 1);
-	glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
-}
-
 void MeshMakerMarchingCubes::setupFunction() {
 	setupConcatenatedShader(getPointsCS, "ComputeShaders/Common/GetPoints.glsl", control.functionFile);
 	getPointsCS.linkProgram();
-	setupConcatenatedShader(getPositionsAndNormalsCS, "ComputeShaders/MC/GetPositionsAndNormalsMC.glsl", control.functionFile);
-	getPositionsAndNormalsCS.linkProgram();
+	setupConcatenatedShader(getVerticesCS, "ComputeShaders/MC/GetPositionsAndNormalsMC.glsl", control.functionFile);
+	getVerticesCS.linkProgram();
 }
 

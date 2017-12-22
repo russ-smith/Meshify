@@ -2,24 +2,34 @@
 
 //Descends the pyramid one layer at a time and sums cube values, 
 //until location of current vertex found in base layer
+//Writes ID of first vertex in each cube to 3D texture for element array shader
+//Calculates final position and normal
 
 layout (local_size_x = 64) in;
 
 uniform int layers;
 uniform int total;
+uniform int res;
+uniform float stride;
 
 layout (binding = 1) uniform usampler3D cubeCases;
 layout (binding = 2) uniform usampler3D pyramid[8];
 layout (binding = 12) uniform usampler1D newVerts;
 layout (binding = 0) uniform writeonly uimage3D vertPositions;
 
-struct marker {	
-	uint data, pad1, pad2;
+struct vector3{									
+	float x,y,z;
 };
 
-layout (binding = 0, std430) buffer vm {
-	marker vertMarkers[];
+layout (binding = 1, std430) writeonly buffer p{
+	vector3 positions[];
 };
+
+layout (binding = 2, std430) writeonly buffer n{
+	vector3 normals[];
+};
+
+float DE(vec3 p);
 
 void main(){
 	uint id = gl_GlobalInvocationID.x;
@@ -158,5 +168,24 @@ void main(){
 		}
 	}
 
-	vertMarkers[id].data = (edge << 30) + (pos.x << 20) + (pos.y << 10) + pos.z ;
+	//vertMarkers[id].data = (edge << 30) + (pos.x << 20) + (pos.y << 10) + pos.z ;
+	vec3 posA = vec3(pos - (res/2 - 1)) * stride;
+	vec3 posB;
+	if (edge==0) posB = posA - vec3(stride, 0, 0);
+	if (edge==1) posB = posA - vec3(0, stride, 0);
+	if (edge==2) posB = posA - vec3(0, 0, stride);
+	float dA = DE(posA), dB = DE(posB);
+	posB = mix(posA, posB, abs(dA) / (abs(dA) + abs(dB) ) );
+	positions[id].x = posB.x; 
+	positions[id].y = posB.y;
+	positions[id].z = posB.z;
+	
+	//6-tap normal using central differences
+	vec2 e = vec2 (.005, 0);
+	vec3 normal = normalize (vec3 ( DE (posB + e.xyy) - DE (posB - e.xyy),
+									DE (posB + e.yxy) - DE (posB - e.yxy),
+									DE (posB + e.yyx) - DE (posB - e.yyx) ) );
+	normals[id].x = normal.x;
+	normals[id].y = normal.y;
+	normals[id].z = normal.z;
 }

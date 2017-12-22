@@ -82,24 +82,21 @@ If it is the first vertex within a cube, it writes its ID number into the full-r
 values, at the cube’s position. This will be used later when indexing the triangles. 
 
 It then uses the cube case and its index within the cube to look up if it is on the leading X, Y or Z edge of the cube. 
-A simple 32-bit marker is written out to the vertex buffer containing 10 bits each for the cube’s X, Y and Z coordinates, 
-and the remaining 2 bits specifying the edge.
+The distance field is then sampled again at the two endpoints of the edge, and the vertex position is interpolated between
+the two points according to each point's absolute distance value.
+
+To calculate the normals, central differences are used. The distance field is sampled 6 times around the final position, at a small
+offset in each direction along each axis. The differences between the values are used to calculate the 3 components of the normal, 
+which is then normalized.
 
 ### Finding triangles
-A shader invocation per-triangle is dispatched, and descends the triangles pyramid to find its cube and offset in an identical 
-manner to the vertices pyramid. Each invocation then reads 3 entries from a lookup table using the cube case and offset to find 
-its 3 vertices. 
+A shader invocation per-triangle is dispatched, and descends the triangles pyramid to find its cube and offset from the first
+vertex in the cube in an identical manner to the vertices pyramid. Each invocation then reads 3 entries from a lookup table using 
+the cube case and offset to find its 3 vertices. 
 
 Since vertices lie on cube edges, each cube’s triangles can contain vertices from previous cubes along any of the 3 axes. 
 The triangle lookup table uses a bitfield format for each vertex, representing whether a vertex is on an X, Y or Z edge, 
 and whether it belongs to the current cube or a neighbour. The texture generated in the last step, containing the ID of the first
 vertex in each cube, is used to calculate the ID of each vertex in the triangle, and these are then written to the element buffer.
 
-### Finding vertex positions and normals
-Each vertex's final positon is calculated from its marker point. The marker point is decoded to find which cube it is in and which edge it 
-lies on. The distance field is then sampled again at the two endpoints of the edge, and the vertex position is interpolated between
-the two points according to each point's absolute distance value.
 
-To calculate the normals, central differences are used. The distance field is sampled 6 times around the final position, at a small
-offset in each direction along each axis. The differences between the values are used to calculate the 3 components of the normal, 
-which is then normalized.

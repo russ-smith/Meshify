@@ -236,7 +236,6 @@
     <None Include="bin\data\ComputeShaders\Common\GetPoints.glsl" />
     <None Include="bin\data\ComputeShaders\DMC\BuildBaseLayerDMC.glsl" />
     <None Include="bin\data\ComputeShaders\MC\BuildBaseLayerMC.glsl" />
-    <None Include="bin\data\ComputeShaders\MC\GetPositionsAndNormalsMC.glsl" />
     <None Include="bin\data\ComputeShaders\MC\GetTrianglesMC.glsl" />
     <None Include="bin\data\ComputeShaders\MC\GetVerticesMC.glsl" />
     <None Include="bin\data\DrawingShaders\phong2lights.frag" />
