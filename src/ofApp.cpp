@@ -14,7 +14,6 @@ void ofApp::setup(){
 	renderShader.load("DrawingShaders/phong2lights");
 	cam.setDistance(10);
 	cam.setNearClip(0.5);
-	//testing
 }
 
 //--------------------------------------------------------------
