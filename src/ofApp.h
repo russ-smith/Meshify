@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "MeshMakerMarchingCubes.h"
+#include "MeshMakerDualMarchingCubes.h"
 #include "ControlPanel.h"
 
 class ofApp : public ofBaseApp{

@@ -29,8 +29,10 @@ public:
 		pyramidA[8],
 		pyramidB[8],
 		newEdgeTableTex,
-		numTrisMCTableTex,
-		triTableMCTex;
+		MCNumTrisTableTex,
+		MCTriTableTex,
+		DMCNumVertsTableTex,
+		DMCVertToEdgeTableTex;
 private:
 	BufferBundle();
 };

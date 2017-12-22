@@ -189,6 +189,7 @@
     <ClCompile Include="src\LookupTables.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MeshMakerBase.cpp" />
+    <ClCompile Include="src\MeshMakerDualMarchingCubes.cpp" />
     <ClCompile Include="src\MeshMakerMarchingCubes.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
   </ItemGroup>
@@ -210,6 +211,7 @@
     <ClInclude Include="..\..\..\addons\ofxGuiExtended\src\ofxToggle.h" />
     <ClInclude Include="src\BufferBundle.h" />
     <ClInclude Include="src\ControlPanel.h" />
+    <ClInclude Include="src\MeshMakerDualMarchingCubes.h" />
     <ClInclude Include="src\LookupTables.h" />
     <ClInclude Include="src\MeshMakerBase.h" />
     <ClInclude Include="src\MeshMakerMarchingCubes.h" />
@@ -228,6 +230,15 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\data\ComputeShaders\Common\BuildFinalLayer.glsl" />
+    <None Include="bin\data\ComputeShaders\Common\BuildNextLayer.glsl" />
+    <None Include="bin\data\ComputeShaders\Common\GetCases.glsl" />
+    <None Include="bin\data\ComputeShaders\Common\GetPoints.glsl" />
+    <None Include="bin\data\ComputeShaders\DMC\BuildBaseLayerDMC.glsl" />
+    <None Include="bin\data\ComputeShaders\MC\BuildBaseLayerMC.glsl" />
+    <None Include="bin\data\ComputeShaders\MC\GetPositionsAndNormalsMC.glsl" />
+    <None Include="bin\data\ComputeShaders\MC\GetTrianglesMC.glsl" />
+    <None Include="bin\data\ComputeShaders\MC\GetVerticesMC.glsl" />
     <None Include="bin\data\DrawingShaders\phong2lights.frag" />
     <None Include="bin\data\DrawingShaders\phong2lights.vert" />
   </ItemGroup>

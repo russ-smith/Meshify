@@ -10,8 +10,6 @@ namespace LookupTables {
 	//final value is the total number of edges found
 	//fortunately, values repeat for cube cases in a regular pattern,
 	//so the table only needs 64 entries
-	//formula for cube case -> start of 4-entry lookup block is:
-	//   ((case >> 2) & 56) + (case & 4)
 	unsigned char newEdgeTable[256] = {
 		4, 4, 4, 0,  4, 4, 0, 1,  4, 4, 4, 0,  4, 4, 0, 1,
 		4, 4, 4, 0,  4, 4, 0, 1,  4, 4, 4, 0,  4, 4, 0, 1,

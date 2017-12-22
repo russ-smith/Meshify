@@ -61,6 +61,9 @@
     <ClCompile Include="src\ofApp.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\MeshMakerDualMarchingCubes.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -143,6 +146,9 @@
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\MeshMakerDualMarchingCubes.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
@@ -152,6 +158,33 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="bin\data\DrawingShaders\phong2lights.vert">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\Common\BuildFinalLayer.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\Common\BuildNextLayer.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\Common\GetCases.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\Common\GetPoints.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\DMC\BuildBaseLayerDMC.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\MC\BuildBaseLayerMC.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\MC\GetPositionsAndNormalsMC.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\MC\GetTrianglesMC.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\MC\GetVerticesMC.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

@@ -4,4 +4,5 @@ namespace LookupTables {
 	extern unsigned char MCNumTris[256];
 	extern char MCTriTable[4096];
 	extern char DMCVertToEdgeTable[4096];
+	extern unsigned char DMCNumVertsTable[256];
 }
