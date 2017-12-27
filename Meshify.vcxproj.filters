@@ -190,5 +190,11 @@
     <None Include="bin\data\ComputeShaders\DMC\GetVerticesDMC.glsl">
       <Filter>shaders</Filter>
     </None>
+    <None Include="bin\data\ComputeShaders\DMC\GetPositionsAndNormalsDMC.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\ComputeShaders\DMC\GetTrianglesDMC.glsl">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

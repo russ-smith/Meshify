@@ -4,9 +4,9 @@
 void ofApp::setup(){
 	//instantiate buffers before doing anything else!
 	BufferBundle::instance();
-	control.registerAlgorithmCallback([this]() { changeAlgorithm(); });
+	control.registerAlgorithmCallback([this](int i) { changeAlgorithm(i); });
 	control.registerRedrawCallback([this]() {needsRedraw = true; });
-	maker = make_unique<MeshMakerDualMarchingCubes>(control);
+	maker = make_unique<MeshMakerMarchingCubes>(control);
 	maker->makeMesh();
 	ofSetVerticalSync(true);
 	ofSetFrameRate(30);
@@ -65,11 +65,12 @@ void ofApp::keyReleased(int key){
 
 }
 
-void ofApp::changeAlgorithm() {
+void ofApp::changeAlgorithm(int algo) {
 	
-	maker = make_unique<MeshMakerMarchingCubes>(control);
-
-	maker->makeMesh();
+	if (algo == 0)
+		maker = make_unique<MeshMakerMarchingCubes>(control);
+	else
+		maker = make_unique<MeshMakerDualMarchingCubes>(control);
 }
 
 void ofApp::setLightAndMaterial() {

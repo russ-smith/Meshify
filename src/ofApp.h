@@ -15,7 +15,7 @@ class ofApp : public ofBaseApp{
 		void keyPressed(int key);
 		void keyReleased(int key);
 	private:
-		void changeAlgorithm();
+		void changeAlgorithm(int algo);
 		void setLightAndMaterial();
 		ofEasyCam cam;
 		ofShader renderShader;

@@ -110,8 +110,9 @@ void ControlPanel::resChanged(bool & param) {
 }
 
 void ControlPanel::algoChanged(bool & param) {
+	int algo = isDMC ? 1 : 0;
 	if(algorithmCallback)
-		algorithmCallback();
+		algorithmCallback(algo);
 	if (redrawCallback)
 		redrawCallback();
 }
@@ -130,7 +131,7 @@ void ControlPanel::registerFunctionCallback(function<void()> f) {
 	functionCallback = f;
 }
 
-void ControlPanel::registerAlgorithmCallback(function<void()> f) {
+void ControlPanel::registerAlgorithmCallback(function<void(int)> f) {
 	algorithmCallback = f;
 }
 

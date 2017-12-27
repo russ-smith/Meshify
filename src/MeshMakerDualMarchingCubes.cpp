@@ -10,6 +10,8 @@ MeshMakerDualMarchingCubes::MeshMakerDualMarchingCubes(ControlPanel & c) : MeshM
 	getPositionsAndNormalsCS.linkProgram();
 	getVerticesCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/DMC/GetVerticesDMC.glsl");
 	getVerticesCS.linkProgram();
+	getTrianglesCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/DMC/GetTrianglesDMC.glsl");
+	getTrianglesCS.linkProgram();
 }
 
 void MeshMakerDualMarchingCubes::makeMesh() {
@@ -26,7 +28,9 @@ void MeshMakerDualMarchingCubes::makeMesh() {
 	getEdges();
 	getVertices();
 	getPositionsAndNormals();
-	control.setLabels(numVerts, numPolys*2);
+	getTriangles();
+	numPolys *= 2;
+	control.setLabels(numVerts, numPolys);
 }
 
 void MeshMakerDualMarchingCubes::buildBaseLayer() {
@@ -68,6 +72,10 @@ void MeshMakerDualMarchingCubes::getPositionsAndNormals() {
 }
 
 void MeshMakerDualMarchingCubes::getTriangles() {
+	glUseProgram(getTrianglesCS.getProgram());
+	getTrianglesCS.setUniform1i("total", numPolys);
+	glDispatchCompute((numPolys + 63) / 64, 1, 1);
+	glMemoryBarrier(GL_ELEMENT_ARRAY_BARRIER_BIT);
 }
 
 void MeshMakerDualMarchingCubes::setupFunction() {

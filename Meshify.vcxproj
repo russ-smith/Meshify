@@ -236,6 +236,8 @@
     <None Include="bin\data\ComputeShaders\Common\GetPoints.glsl" />
     <None Include="bin\data\ComputeShaders\DMC\BuildBaseLayerDMC.glsl" />
     <None Include="bin\data\ComputeShaders\DMC\GetEdgesDMC.glsl" />
+    <None Include="bin\data\ComputeShaders\DMC\GetPositionsAndNormalsDMC.glsl" />
+    <None Include="bin\data\ComputeShaders\DMC\GetTrianglesDMC.glsl" />
     <None Include="bin\data\ComputeShaders\DMC\GetVerticesDMC.glsl" />
     <None Include="bin\data\ComputeShaders\MC\BuildBaseLayerMC.glsl" />
     <None Include="bin\data\ComputeShaders\MC\GetTrianglesMC.glsl" />

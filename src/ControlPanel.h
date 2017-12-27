@@ -10,7 +10,7 @@ public:
 	void setLabels(int verts, int polys);
 	void registerRedrawCallback(function<void()> f);
 	void registerFunctionCallback(function<void()> f);
-	void registerAlgorithmCallback(function<void()> f);
+	void registerAlgorithmCallback(function<void(int)> f);
 	void draw();
 	void toggleGUI(int which);
 	int res();
@@ -34,7 +34,7 @@ protected:
 	//external callbacks registered by other objects
 	function<void()> redrawCallback;
 	function<void()> functionCallback;
-	function<void()> algorithmCallback;
+	function<void(int)> algorithmCallback;
 
 	ofxPanelExtended meshGUI, renderGUI;
 	ofxGuiMatrix resMatrix;
