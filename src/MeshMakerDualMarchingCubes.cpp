@@ -4,6 +4,10 @@ MeshMakerDualMarchingCubes::MeshMakerDualMarchingCubes(ControlPanel & c) : MeshM
 	control.registerFunctionCallback([this]() { setupFunction(); });
 	buildBaseLayerCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/DMC/BuildBaseLayerDMC.glsl");
 	buildBaseLayerCS.linkProgram();
+	setupConcatenatedShader(getEdgesCS, "ComputeShaders/DMC/GetEdgesDMC.glsl", control.functionFile);
+	getEdgesCS.linkProgram();
+	getVerticesCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/DMC/GetVerticesDMC.glsl");
+	getVerticesCS.linkProgram();
 }
 
 void MeshMakerDualMarchingCubes::makeMesh() {
@@ -12,10 +16,14 @@ void MeshMakerDualMarchingCubes::makeMesh() {
 	buildPyramidsFromBaseLayer();
 	GLuint* mappedBuff = static_cast<GLuint*>(glMapNamedBuffer(BufferBundle::instance().totalsBuff, GL_READ_ONLY));
 	numVerts = mappedBuff[1];
-	numPolys = mappedBuff[0] * 2;
+	numPolys = mappedBuff[0];
 	glUnmapNamedBuffer(BufferBundle::instance().totalsBuff);
-
-	control.setLabels(numVerts, numPolys);
+	glNamedBufferData(BufferBundle::instance().vertexBuff, 3 * numVerts * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+	glNamedBufferData(BufferBundle::instance().normalBuff, 3 * max(numVerts, numPolys) * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+	glNamedBufferData(BufferBundle::instance().elementBuff, 6 * numPolys * sizeof(GLuint), nullptr, GL_DYNAMIC_DRAW);
+	getEdges();
+	getVertices();
+	control.setLabels(numVerts, numPolys*2);
 }
 
 void MeshMakerDualMarchingCubes::buildBaseLayer() {
@@ -28,7 +36,30 @@ void MeshMakerDualMarchingCubes::buildBaseLayer() {
 	glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT);
 }
 
+void MeshMakerDualMarchingCubes::getEdges() {
+	glBindTextures(2, 8, BufferBundle::instance().pyramidA);
+	glUseProgram(getEdgesCS.getProgram());
+	getEdgesCS.setUniform1i("total", numPolys);
+	getEdgesCS.setUniform1i("layers", control.layers());
+	getEdgesCS.setUniform1i("res", control.res());
+	getEdgesCS.setUniform1f("stride", control.stride());
+	getEdgesCS.setUniforms(control.functionParams);
+	glDispatchCompute((numPolys + 63) / 64, 1, 1);
+	glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT);
+}
+
+void MeshMakerDualMarchingCubes::getVertices() {
+	glBindTextures(2, 8, BufferBundle::instance().pyramidB);
+	glUseProgram(getVerticesCS.getProgram());
+	getVerticesCS.setUniform1i("total", numVerts);
+	getVerticesCS.setUniform1i("layers", control.layers());
+	glDispatchCompute((numVerts + 63) / 64, 1, 1);
+	glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
+}
+
 void MeshMakerDualMarchingCubes::setupFunction() {
 	setupConcatenatedShader(getPointsCS, "ComputeShaders/Common/GetPoints.glsl", control.functionFile);
 	getPointsCS.linkProgram();
+	setupConcatenatedShader(getEdgesCS, "ComputeShaders/DMC/GetEdgesDMC.glsl", control.functionFile);
+	getEdgesCS.linkProgram();
 }

@@ -63,7 +63,7 @@ ControlPanel::ControlPanel() {
 	polygons.setup("Polygons", "0", 200, 20);
 	meshGUI.add(&vertices);
 	meshGUI.add(&polygons);
-	functionFile = ofToDataPath("DistanceFunctions/polyhedra.glsl");
+	functionFile = ofToDataPath("DistanceFunctions/sphere.glsl");
 
 	//setup rendering GUI
 	renderGUI.setup("Rendering");

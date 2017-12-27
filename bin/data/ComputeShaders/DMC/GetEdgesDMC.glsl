@@ -172,7 +172,7 @@ void main(){
 		}
 	}
 
-	edgeinfo[id].flip = (index & 64 > 0 ? 1 : 0);
+	edgeinfo[id].flip = ((index & 64) > 0 ? 1 : 0);
 
 	//lerp position between edge endpoints depending on distance from surface
 	vec3 posA = vec3(pos - (res/2 - 1)) * stride;

@@ -18,6 +18,9 @@ void MeshMakerMarchingCubes::makeMesh() {
 	numVerts = mappedBuff[0];
 	numPolys = mappedBuff[1];
 	glUnmapNamedBuffer(BufferBundle::instance().totalsBuff);
+	glNamedBufferData(BufferBundle::instance().vertexBuff, 3 * numVerts * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+	glNamedBufferData(BufferBundle::instance().normalBuff, 3 * numVerts * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+	glNamedBufferData(BufferBundle::instance().elementBuff, 3 * numPolys * sizeof(GLuint), nullptr, GL_DYNAMIC_DRAW);
 	getVertices();
 	getTriangles();
 	control.setLabels(numVerts, numPolys);
@@ -35,8 +38,7 @@ void MeshMakerMarchingCubes::buildBaseLayer() {
 }
 
 void MeshMakerMarchingCubes::getVertices() {
-	glNamedBufferData(BufferBundle::instance().vertexBuff, 3 * numVerts * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
-	glNamedBufferData(BufferBundle::instance().normalBuff, 3 * numVerts * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+
 	glBindTextures(2, 8, BufferBundle::instance().pyramidA);
 	glUseProgram(getVerticesCS.getProgram());
 	getVerticesCS.setUniform1i("total", numVerts);
@@ -49,7 +51,6 @@ void MeshMakerMarchingCubes::getVertices() {
 }
 
 void MeshMakerMarchingCubes::getTriangles() {
-	glNamedBufferData(BufferBundle::instance().elementBuff, 3 * numPolys * sizeof(GLuint), nullptr, GL_DYNAMIC_DRAW);
 	glBindTextures(2, 8, BufferBundle::instance().pyramidB);
 	glUseProgram(getTrianglesCS.getProgram());
 	getTrianglesCS.setUniform1i("total", numPolys);

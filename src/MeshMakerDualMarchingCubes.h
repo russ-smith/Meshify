@@ -9,6 +9,8 @@ public:
 
 private:
 	void buildBaseLayer();
+	void getEdges();
+	void getVertices();
 	void setupFunction() override;
-	ofShader buildBaseLayerCS;
+	ofShader buildBaseLayerCS, getEdgesCS, getVerticesCS;
 };

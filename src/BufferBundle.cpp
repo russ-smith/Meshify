@@ -61,6 +61,7 @@ BufferBundle::BufferBundle() {
 	glBindTextureUnit(14, DMCNumVertsTableTex);
 	glBindTextureUnit(15, DMCVertToEdgeTableTex);
 	glBindTextureUnit(16, DMCVertBeginTableTex);
+	
 	//vertex data buffers
 	glCreateBuffers(1, &vertexBuff);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, vertexBuff);			//bind this buffer twice

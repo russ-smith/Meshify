@@ -314,10 +314,11 @@ namespace LookupTables {
 
 
 	// bitpacked table based on lin20's table
-	//-2 = break
-	//-1 = next vertex
-	//sign1_edgeVertIndex2_Xoffset1_Yoffset1_Zoffset1_edge2 (00 = x 01 = y 10 = z edge)
-
+	//associates vertices with cube edges
+	//lowest 5 bits are the same as Marching Cubes table (XYZ cube offset, edge direction)
+	//next 2 bits determine vertex's position in edge's vertex list (4 verts per edge)
+	//-1 = next vertex, -2 = done
+	
 	char DMCVertToEdgeTable[4096] = {
 		-2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 		76, 90, 85, -2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -598,7 +599,7 @@ namespace LookupTables {
 	};
 
 	//beginning position of each vertex in the main lookup table
-	//(up to 4 vertices per cube in Dual Marching Cubes)
+	//(up to 4 vertices per cube)
 	char DMCVertBeginTable[1024] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
