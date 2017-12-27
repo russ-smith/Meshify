@@ -318,6 +318,8 @@ namespace LookupTables {
 	//lowest 5 bits are the same as Marching Cubes table (XYZ cube offset, edge direction)
 	//next 2 bits determine vertex's position in edge's vertex list (4 verts per edge)
 	//-1 = next vertex, -2 = done
+
+
 	
 	char DMCVertToEdgeTable[4096] = {
 		-2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -600,7 +602,7 @@ namespace LookupTables {
 
 	//beginning position of each vertex in the main lookup table
 	//(up to 4 vertices per cube)
-	char DMCVertBeginTable[1024] = {
+	unsigned char DMCVertBeginTable[1024] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0,

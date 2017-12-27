@@ -6,7 +6,7 @@ void ofApp::setup(){
 	BufferBundle::instance();
 	control.registerAlgorithmCallback([this]() { changeAlgorithm(); });
 	control.registerRedrawCallback([this]() {needsRedraw = true; });
-	maker = make_unique<MeshMakerMarchingCubes>(control);
+	maker = make_unique<MeshMakerDualMarchingCubes>(control);
 	maker->makeMesh();
 	ofSetVerticalSync(true);
 	ofSetFrameRate(30);

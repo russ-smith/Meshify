@@ -6,6 +6,8 @@ MeshMakerDualMarchingCubes::MeshMakerDualMarchingCubes(ControlPanel & c) : MeshM
 	buildBaseLayerCS.linkProgram();
 	setupConcatenatedShader(getEdgesCS, "ComputeShaders/DMC/GetEdgesDMC.glsl", control.functionFile);
 	getEdgesCS.linkProgram();
+	setupConcatenatedShader(getPositionsAndNormalsCS, "ComputeShaders/DMC/GetPositionsAndNormalsDMC.glsl", control.functionFile);
+	getPositionsAndNormalsCS.linkProgram();
 	getVerticesCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/DMC/GetVerticesDMC.glsl");
 	getVerticesCS.linkProgram();
 }
@@ -23,6 +25,7 @@ void MeshMakerDualMarchingCubes::makeMesh() {
 	glNamedBufferData(BufferBundle::instance().elementBuff, 6 * numPolys * sizeof(GLuint), nullptr, GL_DYNAMIC_DRAW);
 	getEdges();
 	getVertices();
+	getPositionsAndNormals();
 	control.setLabels(numVerts, numPolys*2);
 }
 
@@ -54,7 +57,17 @@ void MeshMakerDualMarchingCubes::getVertices() {
 	getVerticesCS.setUniform1i("total", numVerts);
 	getVerticesCS.setUniform1i("layers", control.layers());
 	glDispatchCompute((numVerts + 63) / 64, 1, 1);
-	glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
+	glMemoryBarrier(GL_BUFFER_UPDATE_BARRIER_BIT);
+}
+
+void MeshMakerDualMarchingCubes::getPositionsAndNormals() {
+	glUseProgram(getPositionsAndNormalsCS.getProgram());
+	getPositionsAndNormalsCS.setUniform1i("total", numVerts);
+	glDispatchCompute((numVerts + 63) / 64, 1, 1);
+	glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT | GL_BUFFER_UPDATE_BARRIER_BIT);
+}
+
+void MeshMakerDualMarchingCubes::getTriangles() {
 }
 
 void MeshMakerDualMarchingCubes::setupFunction() {
@@ -62,4 +75,6 @@ void MeshMakerDualMarchingCubes::setupFunction() {
 	getPointsCS.linkProgram();
 	setupConcatenatedShader(getEdgesCS, "ComputeShaders/DMC/GetEdgesDMC.glsl", control.functionFile);
 	getEdgesCS.linkProgram();
+	setupConcatenatedShader(getPositionsAndNormalsCS, "ComputeShaders/DMC/GetPostionsAndNormalsDMC.glsl", control.functionFile);
+	getPositionsAndNormalsCS.linkProgram();
 }

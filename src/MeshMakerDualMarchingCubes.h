@@ -11,6 +11,8 @@ private:
 	void buildBaseLayer();
 	void getEdges();
 	void getVertices();
+	void getPositionsAndNormals();
+	void getTriangles();
 	void setupFunction() override;
-	ofShader buildBaseLayerCS, getEdgesCS, getVerticesCS;
+	ofShader buildBaseLayerCS, getEdgesCS, getVerticesCS, getPositionsAndNormalsCS, getTrianglesCS;
 };
