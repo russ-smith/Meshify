@@ -1,5 +1,9 @@
 #version 440 core
 
+//Descends the pyramid one layer at a time and sums cube values, 
+//until location of current triangle found in base layer
+//Uses cube case texture and vertex number texture to find vertex IDs 
+//forming triangle, and writes IDs to element buffer
 
 layout (local_size_x = 64) in;
 
@@ -13,8 +17,6 @@ layout (binding = 2) uniform usampler3D pyramid[8];
 layout (binding = 11) uniform usampler1D numTris;
 layout (binding = 12) uniform usampler1D newVerts;
 layout (binding = 13) uniform isampler1D triTable;
-
-
 
 struct tri {
 	uint data[3];

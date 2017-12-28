@@ -3,7 +3,7 @@
 #include "ofxGuiExtended.h"
 
 //This class holds the GUI and backing variables.
-//Other classes can query the variables to see if they need to take action.
+//Other classes can register callbacks to respond to parameter changes
 class ControlPanel {
 public:
 	ControlPanel();

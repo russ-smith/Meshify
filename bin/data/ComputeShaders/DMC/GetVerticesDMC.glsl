@@ -43,6 +43,8 @@ void main(){
 	vec4 vertPos = vec4(0);
 	int index;
 
+	//descend histopyramid layer by layer. carry over current position (*2),
+	//and sum of previous cubes when moving to next layer
 	for(int i = 0; i<layers; i++){
 		pos *= 2;
 		add = texelFetch(pyramid[i], pos, 0).r;
@@ -161,7 +163,6 @@ void main(){
 	vertPositions[id].x = float(index);
 
 	//accumulate positions from each edge associated with the vertex to find average position
-	//(TOD0 find better positioning algorithm)
 	//at the same time write the vertex's ID to the element buffer for each edge found
 	for(int i = 0; i<6; i++){				
 		vertCode = texelFetch(vertToEdge, index+begin+i, 0).r;

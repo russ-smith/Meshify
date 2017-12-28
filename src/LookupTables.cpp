@@ -1,14 +1,12 @@
 #include "LookupTables.h"
 
 namespace LookupTables {
-	//custom bit packed formats for shader based on Bourke's table
-
-
+	
 	//new leading edge crossings found per cube case
 	//in each group of 4, the first 3 values are the offsets of the x, y, z edges
 	//from the cube's first edge found (4 means no edge)
 	//final value is the total number of edges found
-	//fortunately, values repeat for cube cases in a regular pattern,
+	//fortunately, values repeat for each 4 cube cases,
 	//so the table only needs 64 entries
 	unsigned char newEdgeTable[256] = {
 		4, 4, 4, 0,  4, 4, 0, 1,  4, 4, 4, 0,  4, 4, 0, 1,
@@ -48,7 +46,7 @@ namespace LookupTables {
 		3, 4, 4, 5, 4, 5, 3, 4, 4, 5, 5, 2, 3, 4, 2, 1,
 		2, 3, 3, 2, 3, 4, 2, 1, 3, 2, 4, 1, 2, 1, 1, 0 };
 
-	//8-bit indices for generated triangles
+	//8-bit indices for generated triangles based on Bourke's table
 	//vertex numbers sampled from current cube and previous cubes along each axis
 	//3 null bits, 3 bits for X,Y,Z offsets from current cube to vertex-owning cube,
 	//2 bits for edge direction (00 = x 01 = y 10 = z edge)
@@ -312,14 +310,10 @@ namespace LookupTables {
 		-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
 	};
 
-
-	// bitpacked table based on lin20's table
-	//associates vertices with cube edges
+	//8-bit indices to associate vertices with cube edges,  based on lin20's table
 	//lowest 5 bits are the same as Marching Cubes table (XYZ cube offset, edge direction)
 	//next 2 bits determine vertex's position in edge's vertex list (4 verts per edge)
 	//-1 = next vertex, -2 = done
-
-
 	
 	char DMCVertToEdgeTable[4096] = {
 		-2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,

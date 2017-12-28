@@ -2,6 +2,8 @@
 
 //Descends the pyramid one layer at a time and sums cube values, 
 //until location of current edge found in base layer
+//Writes ID of first edge in each cube to 3D texture for later stages
+//Calculates surface-crossing point for each edge
 
 layout (local_size_x = 64) in;
 
@@ -44,6 +46,8 @@ void main(){
 	int index; 
 	uvec4 edges;
 
+	//descend histopyramid layer by layer. carry over current position (*2),
+	//and sum of previous cubes when moving to next layer
 	for(int i = 0; i<layers; i++){
 		pos *= 2;
 		add = texelFetch(pyramid[i], pos, 0).r;
@@ -94,6 +98,8 @@ void main(){
 		}
 	}
 
+	//find final cube containing id number in base layer 
+	//(lookup count from cube case)
 	for(int i = 0; i<1; i++){		
 		pos *= 2;
 
@@ -161,9 +167,11 @@ void main(){
 		}
 	}
 
+	//write first edge ID per-cube to big texture for later
 	if(count==id){
 		imageStore(edgeNumbers, pos, uvec4(count, 0,0,0));
 	}
+
 	count = uint(id)-count;
 	uint edge;
 	for(int i=0; i<3; i++){

@@ -1,5 +1,8 @@
 #version 440 core
 
+//Samples the distance function at all lattice points and 
+//writes classification to 3D texture
+
 layout (local_size_x=4, local_size_y =4, local_Size_z=4) in;
 layout (binding=0) uniform writeonly uimage3D points;
 

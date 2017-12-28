@@ -21,7 +21,7 @@ Below this is a toggle for wireframe mode which allows you to see the mesh struc
 You may need to zoom in to see this at high resolutions.
 
 Below this is a two way toggle allowing you to switch extraction mode between
-Marching Cubes and Dual Marching Cubes(coming soon).
+Marching Cubes and Dual Marching Cubes..
 
 ## Loading a new function
 

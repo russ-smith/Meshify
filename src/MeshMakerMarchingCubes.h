@@ -1,6 +1,7 @@
 #pragma once
 #include "MeshMakerBase.h"
 
+//concrete mesh maker using marching cubes
 class MeshMakerMarchingCubes : public MeshMakerBase {
 public:
 	MeshMakerMarchingCubes(ControlPanel &c);

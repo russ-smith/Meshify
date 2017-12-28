@@ -1,5 +1,9 @@
 #version 440 core
 
+//Calculates normal for each vertex position
+//Uses normal and distance value at vertex position to move vertex a little 
+//closer to the true surface
+
 layout (local_size_x = 64) in;
 uniform int total;
 

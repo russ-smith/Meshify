@@ -11,14 +11,10 @@ http://heim.ifi.uio.no/~erikd/pdf/hpmarcher_draft.pdf
 with Geiss' technique for sharing vertices across cubes at
 https://developer.nvidia.com/gpugems/GPUGems3/gpugems3_ch01.html
 
-Marching Cubes currently working, Dual Marching Cubes coming soon.
-
-For instructions on building and usage, and a brief algorithm description, 
+For instructions on building and usage, and a description of the algorithms, 
 see the doc folder.
 
 ## TODO
-
-Finish Dual Marching Cubes implementation
 
 Add more distance functions
 

@@ -1,5 +1,9 @@
 #version 440 core
 
+//Samples 2*2*2 cube from points lattice texture
+//Uses classifications of 8 points to form 8-bit cube case
+//Writes to second texture
+
 layout(local_size_x = 4, local_size_y = 4, local_size_z = 4) in;
 layout(binding = 0) uniform usampler3D points;
 layout(binding = 1) uniform writeonly uimage3D cases;

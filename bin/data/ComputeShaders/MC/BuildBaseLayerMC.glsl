@@ -1,8 +1,8 @@
 #version 440 core
 
-//This shader builds the first layer of the 2 histopyramids (edges and triangles).
+//This shader builds the first layer of the 2 histopyramids (vertices and triangles).
 //Each invocation takes 2x2x2 samples from the cube-cases grid
-//The numbers of triangles and new edges are looked up for each cube case, summed,
+//The numbers of triangles and new vertices are looked up for each cube case, summed,
 //and written into the histopyramids at half-resolution.
 
 layout(local_size_x = 4, local_size_y = 4, local_size_z = 4) in;

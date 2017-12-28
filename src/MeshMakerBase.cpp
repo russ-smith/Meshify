@@ -53,10 +53,7 @@ void MeshMakerBase::buildPyramidsFromBaseLayer() {
 	glMemoryBarrier(GL_BUFFER_UPDATE_BARRIER_BIT);
 }
 
-
-
-
-
+//pastes a supplied distance function into the built-in shaders
 bool MeshMakerBase::setupConcatenatedShader(ofShader & shdr, string shdrSrcFile, string fracFuncFile) {
 	ofBuffer buffer = ofBufferFromFile(shdrSrcFile);
 	ofBuffer funcBuffer = ofBufferFromFile(fracFuncFile);

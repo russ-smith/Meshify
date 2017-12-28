@@ -1,8 +1,9 @@
 #pragma once
-#include "ofMain.h"
+
 #include "BufferBundle.h"
 #include "ControlPanel.h"
 
+//abstract base class for mesh makers, contains common functionality
 class MeshMakerBase {
 public:
 	virtual ~MeshMakerBase() {};
