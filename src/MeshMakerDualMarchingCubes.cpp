@@ -51,6 +51,7 @@ void MeshMakerDualMarchingCubes::getEdges() {
 	getEdgesCS.setUniform1i("res", control.res());
 	getEdgesCS.setUniform1f("stride", control.stride());
 	getEdgesCS.setUniforms(control.functionParams);
+	getEdgesCS.setUniforms(control.positionParams);
 	glDispatchCompute((numPolys + 63) / 64, 1, 1);
 	glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT);
 }
@@ -67,6 +68,9 @@ void MeshMakerDualMarchingCubes::getVertices() {
 void MeshMakerDualMarchingCubes::getPositionsAndNormals() {
 	glUseProgram(getPositionsAndNormalsCS.getProgram());
 	getPositionsAndNormalsCS.setUniform1i("total", numVerts);
+	getPositionsAndNormalsCS.setUniforms(control.functionParams);
+	getPositionsAndNormalsCS.setUniforms(control.positionParams);
+	getPositionsAndNormalsCS.setUniform1f("stride", control.stride());
 	glDispatchCompute((numVerts + 63) / 64, 1, 1);
 	glMemoryBarrier(GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT | GL_BUFFER_UPDATE_BARRIER_BIT);
 }

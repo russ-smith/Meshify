@@ -46,6 +46,7 @@ void MeshMakerMarchingCubes::getVertices() {
 	getVerticesCS.setUniform1i("res", control.res());
 	getVerticesCS.setUniform1f("stride", control.stride());
 	getVerticesCS.setUniforms(control.functionParams);
+	getVerticesCS.setUniforms(control.positionParams);
 	glDispatchCompute((numVerts + 63) / 64, 1, 1);	
 	glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT | GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 }

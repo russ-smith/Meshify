@@ -11,6 +11,7 @@ uniform int layers;
 uniform int total;
 uniform int res;
 uniform float stride;
+uniform vec3 Centre;
 
 layout (binding = 1) uniform usampler3D cubeCases;
 layout (binding = 2) uniform usampler3D pyramid[8];
@@ -175,16 +176,16 @@ void main(){
 	}
 
 	//lerp position between edge endpoints depending on distance from surface
-	vec3 posA = vec3(pos - (res/2 - 1)) * stride;
+	vec3 posA = Centre + vec3(pos - (res/2 - 1)) * stride;
 	vec3 posB;
 	if (edge==0) posB = posA - vec3(stride, 0, 0);
 	if (edge==1) posB = posA - vec3(0, stride, 0);
 	if (edge==2) posB = posA - vec3(0, 0, stride);
 	float dA = DE(posA), dB = DE(posB);
 	posB = mix(posA, posB, abs(dA) / (abs(dA) + abs(dB) ) );
-	positions[id].x = posB.x; 
-	positions[id].y = posB.y;
-	positions[id].z = posB.z;
+	positions[id].x = posB.x - Centre.x; 
+	positions[id].y = posB.y - Centre.y;
+	positions[id].z = posB.z - Centre.z;
 	
 	//6-tap normal using central differences
 	vec2 e = vec2 (.005, 0);

@@ -6,6 +6,8 @@
 
 layout (local_size_x = 64) in;
 uniform int total;
+uniform float stride;
+uniform vec3 Centre;
 
 struct vector3{									
 	float x,y,z;
@@ -38,8 +40,8 @@ void main(){
 
 	//nudge the point a bit closer to the real surface
 	float d = DE(pos);
-	pos -= normal * d;
-	positions[id].x = pos.x;
-	positions[id].y = pos.y;
-	positions[id].z = pos.z;
+	pos -= normal * sign(d) * min(abs(d),stride);
+	positions[id].x = pos.x - Centre.x;
+	positions[id].y = pos.y - Centre.y;
+	positions[id].z = pos.z - Centre.z;
 }

@@ -8,12 +8,13 @@ layout (binding=0) uniform writeonly uimage3D points;
 
 uniform int res;
 uniform float stride;
+uniform vec3 Centre;
 
 float DE(vec3 p);
 
 void main(){
 	ivec3 id = ivec3(gl_GlobalInvocationID);
-	vec3 pos = (vec3(id) - .5 * res) * stride;
+	vec3 pos = Centre + (vec3(id) - .5 * res) * stride;
 	uint inside;
 	if (min(id.x , min(id.y, id.z)) == 0 || max(id.x , max(id.y, id.z)) >= res)
 		inside = 0;

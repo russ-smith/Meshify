@@ -166,8 +166,6 @@ void main(){
 	//at the same time write the vertex's ID to the element buffer for each edge found
 	for(int i = 0; i<6; i++){				
 		vertCode = texelFetch(vertToEdge, index+begin+i, 0).r;
-
-
 		if (vertCode < 0) break;
 		offset = ivec3 ( ((vertCode & 16) > 0) ? -1 : 0, ((vertCode & 8) > 0) ? -1 : 0,  ((vertCode & 4) > 0) ? -1 : 0);
 		int index2 = int(texelFetch(cubeCases, pos + offset, 0).r) >> 2;
