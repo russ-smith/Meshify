@@ -27,7 +27,6 @@ void main(){
 	int id = int(gl_GlobalInvocationID.x);
 	if (id >= total) return;
 
-	bool flipped = (quads[id].f > 0);
 	uint A = quads[id].a;
 	uint B = quads[id].b;
 	uint C = quads[id].c;
@@ -42,6 +41,6 @@ void main(){
 
 	quads[id].a = quads[id].f = inorder ? A : B;
 	quads[id].c = quads[id].d = inorder ? C : D;
-	quads[id].b = inorder ? (flipped ? D : B) : (flipped ? A : C);
-	quads[id].e = inorder ? (flipped ? B : D) : (flipped ? C : A);
+	quads[id].b = inorder ? B : C;
+	quads[id].e = inorder ? D : A;
 }

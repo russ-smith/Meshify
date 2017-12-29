@@ -110,19 +110,13 @@ This stage works the same as finding vertices in Marching Cubes with some small 
 edge's approximate intersection with the surface is calculated as described above. This edge position will be used to help 
 calculate the position of the four vertices that lie around that edge, and is stored in what will later become the normal buffer.
 
-Each edge will produce 2 triangles, so it gets 6 entries in the element buffer. The last of these entries is now written 
-with a marker that determines whether the edge's quad is 'flipped' based on the cube case - that is, does the quad's normal point
-towards or away from the cube's leading vertex. This allows the next stage to use a consistent winding order to add vertex indices
-to each quad, which can then be reversed if necessary in the final stage.
-
 The first edge within each cube has its id written into the big 3D texture to help with assembling the geometry, as before.
 
 ### Finding vertices
 This works in a similar manner to finding triangles in Marching Cubes. The second pyramid is descended to find each vertex's cube,
 and bitfield markers are read from a lookup table by cube-case to find which edges it is associated with. These markers work similarly
 to the triangle markers used for Marching Cubes, with the lowest 5 bits containing offset from the current cube and edge direction.
-The 6th and 7th bits contain the vertex's offset within each edge's quad, starting from 0 in the cube that created the edge and 
-proceeding clockwise???????
+The 6th and 7th bits contain the vertex's offset within each edge's vertex list.
 
 Each edge's ID is calculated by sampling the large 3D texture as before. The edges' positions are read from the normal buffer and 
 averaged to get the vertex position, which is written to the vertex buffer. At the same time, the element buffer for each edge is
@@ -137,7 +131,6 @@ For slightly better vertex positioning than just using the centroid method, the 
 and the vertex is moved along the calculated normal by this distance to bring it closer to the true surface.
 
 ### Finding triangles
-Finally the quads are split into triangles. Each quad's 6 entries in the element buffer currently hold its 4 vertices in clockwise
-order, nothing, and its 'flipped' status respectively. The positions of the 4 corners are compared, and the shortest diagonal is 
-chosen to split along to avoid skinny triangles. The chosen split and winding order are then used to write the 4 vertices into 
-the 6 entries in the appropriate order.
+Finally the quads are split into triangles. The 4 vertex IDs making each quad are already stored in the first 4 corresponding entries in 
+the element buffer. The positions of the 4 vertices are read from the vertex buffer, and the shortest diagonal is chosen to split along,
+in order to avoid skinny triangles. The 6 entries in the element buffer are then filled in with the vertices of the 2 triangles.
