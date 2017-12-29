@@ -22,7 +22,7 @@ struct tri {
 	uint data[3];
 };
 
-layout (binding = 3, std430) buffer tr {
+layout (binding = 0, std430) buffer tr {
 	tri triangles[];
 };
 

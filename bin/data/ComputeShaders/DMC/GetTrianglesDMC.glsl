@@ -4,20 +4,20 @@ layout(local_size_x = 64) in;
 
 uniform int total;
 
+struct quad {
+	uint a, b, c, d, e, f;
+};
+
+layout (binding = 0, std430) buffer e {
+	quad quads[];
+};
+
 struct vector3{
 	float x, y, z;
 };
 
 layout (binding = 1, std430) readonly buffer p {
 	vector3 positions[];
-};
-
-struct quad {
-	uint a, b, c, d, e, f;
-};
-
-layout (binding = 3, std430) buffer e {
-	quad quads[];
 };
 
 //create 2 triangles from each edge quad 

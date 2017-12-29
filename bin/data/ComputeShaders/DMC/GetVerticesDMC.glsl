@@ -19,16 +19,16 @@ struct vector3{
 	float x,y,z;
 };
 
+layout (binding = 0, std430) writeonly buffer qu {
+	uint quads[];
+};
+
 layout (binding = 1, std430) writeonly buffer vp{
 	vector3 vertPositions[];
 };
 
 layout (binding = 2, std430) readonly buffer ep{
 	vector3 edgePositions[];
-};
-
-layout (binding = 3, std430) writeonly buffer qu {
-	uint quads[];
 };
 
 void main(){

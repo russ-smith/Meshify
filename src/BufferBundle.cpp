@@ -63,13 +63,13 @@ BufferBundle::BufferBundle() {
 	glBindTextureUnit(16, DMCVertBeginTableTex);
 	
 	//vertex data buffers
+	glCreateBuffers(1, &elementBuff);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, elementBuff);
 	glCreateBuffers(1, &vertexBuff);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, vertexBuff);			//bind this buffer twice
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, vertexBuff);			//gets read and written as different format in some shaders
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, vertexBuff);			
 	glCreateBuffers(1, &normalBuff);
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, normalBuff);
-	glCreateBuffers(1, &elementBuff);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, elementBuff);
+
 
 	//vertex array for rendering
 	glCreateVertexArrays(1, &VAO);
