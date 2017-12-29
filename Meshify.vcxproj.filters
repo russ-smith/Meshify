@@ -154,12 +154,6 @@
     <ResourceCompile Include="icon.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\data\DrawingShaders\phong2lights.frag">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="bin\data\DrawingShaders\phong2lights.vert">
-      <Filter>shaders</Filter>
-    </None>
     <None Include="bin\data\ComputeShaders\Common\BuildFinalLayer.glsl">
       <Filter>shaders</Filter>
     </None>
@@ -194,6 +188,12 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="bin\data\ComputeShaders\DMC\GetTrianglesDMC.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\DrawingShaders\normalizedblinnphong.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="bin\data\DrawingShaders\normalizedblinnphong.vert">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

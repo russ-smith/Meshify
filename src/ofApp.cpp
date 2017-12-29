@@ -11,7 +11,7 @@ void ofApp::setup(){
 	ofSetVerticalSync(true);
 	ofSetFrameRate(30);
 	lightColor = ofVec3f(1);
-	renderShader.load("DrawingShaders/phong2lights");
+	renderShader.load("DrawingShaders/normalizedblinnphong");
 	cam.setDistance(10);
 	cam.setNearClip(0.5);
 }
@@ -74,16 +74,17 @@ void ofApp::changeAlgorithm(int algo) {
 }
 
 void ofApp::setLightAndMaterial() {
-	ofVec3f col = control.lightParams.getVec3f("light0Color");
-	renderShader.setUniform3f("light0Color", col);
-	col = control.lightParams.getVec3f("light1Color");
-	renderShader.setUniform3f("light1Color", col);
-	ofVec2f dir = control.lightParams.getVec2f("light0Dir");
+	ofVec3f col = control.lightParams.getVec3f("Light0Color");
+	renderShader.setUniform3f("Light0Color", col);
+	col = control.lightParams.getVec3f("Light1Color");
+	renderShader.setUniform3f("Light1Color", col);
+	ofVec2f dir = control.lightParams.getVec2f("Light0Dir");
 	ofVec3f realDir = ofVec3f(sin(dir.y)*cos(dir.x), cos(dir.y), sin(dir.y)*sin(dir.x));
-	renderShader.setUniform3f("light0Dir", realDir);
-	dir = control.lightParams.getVec2f("light1Dir");
+	renderShader.setUniform3f("Light0Dir", realDir);
+	dir = control.lightParams.getVec2f("Light1Dir");
 	realDir = ofVec3f(sin(dir.y)*cos(dir.x), cos(dir.y), sin(dir.y)*sin(dir.x));
-	renderShader.setUniform3f("light1Dir", realDir);
+	renderShader.setUniform3f("Light1Dir", realDir);
+	renderShader.setUniforms(control.materialParams);
 }
 
 

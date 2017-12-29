@@ -36,6 +36,12 @@ Each light has an RGB color and a direction.
 The direction is given in spherical coordinates - the first parameter controls longitude,
 and the second controls latitude.
 
+## Contolling material properties
+
+Below the light controls are some simple material parameters for the object's surface.
+The diffuse color affects the color of the matte lighting on the object.
+Smoothness affects the strength and size of glossy highlights.
+
 ## Controlling view
 
 Left-drag to rotate the object.

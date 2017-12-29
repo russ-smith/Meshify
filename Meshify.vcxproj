@@ -242,8 +242,8 @@
     <None Include="bin\data\ComputeShaders\MC\BuildBaseLayerMC.glsl" />
     <None Include="bin\data\ComputeShaders\MC\GetTrianglesMC.glsl" />
     <None Include="bin\data\ComputeShaders\MC\GetVerticesMC.glsl" />
-    <None Include="bin\data\DrawingShaders\phong2lights.frag" />
-    <None Include="bin\data\DrawingShaders\phong2lights.vert" />
+    <None Include="bin\data\DrawingShaders\normalizedblinnphong.frag" />
+    <None Include="bin\data\DrawingShaders\normalizedblinnphong.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>
