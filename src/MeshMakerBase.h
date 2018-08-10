@@ -9,7 +9,7 @@ public:
 	virtual ~MeshMakerBase() {};
 	virtual void makeMesh() = 0;
 	void render();
-	
+	void exportMesh(string fileName);
 
 protected:
 	MeshMakerBase(ControlPanel &c);

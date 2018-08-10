@@ -83,10 +83,11 @@ void MeshMakerDualMarchingCubes::getTriangles() {
 }
 
 void MeshMakerDualMarchingCubes::setupFunction() {
+
 	setupConcatenatedShader(getPointsCS, "ComputeShaders/Common/GetPoints.glsl", control.functionFile);
 	getPointsCS.linkProgram();
 	setupConcatenatedShader(getEdgesCS, "ComputeShaders/DMC/GetEdgesDMC.glsl", control.functionFile);
 	getEdgesCS.linkProgram();
-	setupConcatenatedShader(getPositionsAndNormalsCS, "ComputeShaders/DMC/GetPostionsAndNormalsDMC.glsl", control.functionFile);
+	setupConcatenatedShader(getPositionsAndNormalsCS, "ComputeShaders/DMC/GetPositionsAndNormalsDMC.glsl", control.functionFile);
 	getPositionsAndNormalsCS.linkProgram();
 }

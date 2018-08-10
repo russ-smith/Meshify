@@ -55,10 +55,12 @@ ControlPanel::ControlPanel() {
 	algoMatrix.setElementHeight(16);
 	algoMatrix.allowMultipleActiveToggles(false);
 	meshGUI.add(&algoMatrix);
-	loadButton.setup("   Load new function", 200, 30);
+	loadButton.setup(" Load new function", 200, 30);
 	loadButton.addListener(this, &ControlPanel::loadFunction);
 	meshGUI.add(&loadButton);
-	
+	exportButton.setup(" Export mesh", 200, 30);
+	exportButton.addListener(this, &ControlPanel::exportMesh);
+	meshGUI.add(&exportButton);
 	vertices.setup("Vertices", "0", 200, 20);
 	polygons.setup("Polygons", "0", 200, 20);
 	meshGUI.add(&vertices);
@@ -139,6 +141,10 @@ void ControlPanel::registerAlgorithmCallback(function<void(int)> f) {
 	algorithmCallback = f;
 }
 
+void ControlPanel::registerExportCallback(function<void(string)> f) {
+	exportCallback = f;
+}
+
 void ControlPanel::draw() {
 	if (isMeshGUIDrawing) {
 		meshGUI.setPosition(0, 0);
@@ -182,3 +188,12 @@ void ControlPanel::loadFunction() {
 	if (redrawCallback)
 		redrawCallback();
 }
+
+void ControlPanel::exportMesh() {
+	ofSetDataPathRoot(DEFAULT_DIR);
+	auto exportFile = ofSystemSaveDialog("mesh.obj", "Save mesh as:");
+	if (exportFile.bSuccess && (exportFile.getName().length() > 0) && exportCallback)
+		exportCallback(exportFile.getPath());
+}
+
+

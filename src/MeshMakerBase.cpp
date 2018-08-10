@@ -6,7 +6,47 @@ void MeshMakerBase::render() {
 	glBindVertexArray(0);
 }
 
+//export to wavefront .obj file 
+void MeshMakerBase::exportMesh(string fileName) {
+	cout << "\nEXPORT\n";
+	vector<GLfloat> pos;
+	vector<GLfloat> norm;
+	vector<GLuint> index;
+	pos.resize(3 * numVerts);
+	norm.resize(3 * numVerts);
+	index.resize(3 * numPolys);
+	GLvoid* ptr = glMapNamedBuffer(BufferBundle::instance().vertexBuff, GL_READ_ONLY);
+	memcpy(pos.data(), ptr, 12 * numVerts);
+	glUnmapNamedBuffer(BufferBundle::instance().vertexBuff);
+	ptr = glMapNamedBuffer(BufferBundle::instance().normalBuff, GL_READ_ONLY);
+	memcpy(norm.data(), ptr, 12 * numVerts);
+	glUnmapNamedBuffer(BufferBundle::instance().normalBuff);
+	ptr = glMapNamedBuffer(BufferBundle::instance().elementBuff, GL_READ_ONLY);
+	memcpy(index.data(), ptr, 12 * numPolys);
+	glUnmapNamedBuffer(BufferBundle::instance().elementBuff);
+
+	ofstream file(fileName);
+	if (file.is_open()) {
+		file << "o Mesh" << endl;
+		file << "s 1" << endl;
+		file << "#VERTEX POSITION DATA"<<endl;
+		for (size_t i = 0; i < numVerts; i++) {
+			file << "v " << pos[3 * i] << ' ' << pos[3 * i + 1] << ' ' << pos[3 * i + 2] << endl;
+		}
+		file << "#VERTEX NORMAL DATA" << endl;
+		for (size_t i = 0; i < numVerts; i++) {
+			file << "vn " << norm[3 * i] << ' ' << norm[3 * i + 1] << ' ' << norm[3 * i + 2] << endl;
+		}
+		file << "#FACE DATA" << endl;
+		for (size_t i = 0; i < numPolys; i++) {
+			// 1-based indexing for obj files!
+			file << "f " << (index[3 * i]+1) << ' ' << (index[3 * i + 1]+1) << ' ' << (index[3 * i + 2]+1) << endl;
+		}
+	}
+}
+
 MeshMakerBase::MeshMakerBase(ControlPanel &c) : control(c)  {
+	control.registerExportCallback([this](string s) { exportMesh(s); });
 	setupConcatenatedShader(getPointsCS, "ComputeShaders/Common/GetPoints.glsl", control.functionFile);
 	getPointsCS.linkProgram();
 	getCasesCS.setupShaderFromFile(GL_COMPUTE_SHADER, "ComputeShaders/Common/GetCases.glsl");
@@ -62,6 +102,7 @@ bool MeshMakerBase::setupConcatenatedShader(ofShader & shdr, string shdrSrcFile,
 	string absoluteFilePath = ofFilePath::getAbsolutePath(shdrSrcFile, true);
 	string sourceDirectoryPath = ofFilePath::getEnclosingDirectory(absoluteFilePath, false);
 	if (funcBuffer.size()) {
+		shdr.unload();
 		return shdr.setupShaderFromSource(GL_COMPUTE_SHADER, buffer.getText(), sourceDirectoryPath);
 	}
 	else {

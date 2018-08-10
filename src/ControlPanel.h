@@ -11,6 +11,7 @@ public:
 	void registerRedrawCallback(function<void()> f);
 	void registerFunctionCallback(function<void()> f);
 	void registerAlgorithmCallback(function<void(int)> f);
+	void registerExportCallback(function<void(string)> f);
 	void draw();
 	void toggleGUI(int which);
 	int res();
@@ -30,16 +31,18 @@ protected:
 	void resChanged(bool & param);
 	void algoChanged(bool & param);
 	void loadFunction();
+	void exportMesh();
 
 	//external callbacks registered by other objects
 	function<void()> redrawCallback;
 	function<void()> functionCallback;
 	function<void(int)> algorithmCallback;
+	function<void(string)> exportCallback;
 
 	ofxPanelExtended meshGUI, renderGUI;
 	ofxGuiMatrix resMatrix;
 	ofxGuiMatrix algoMatrix;
-	ofxMinimalButton loadButton;
+	ofxMinimalButton loadButton, exportButton;
 	ofParameter<int> iterations;
 	ofParameter<float> paramA, paramB, paramC, paramD, paramE, paramF, paramG, paramH, extent, smoothness;
 	ofParameter<ofVec3f> centre, light0Color, light1Color, diffColor;
